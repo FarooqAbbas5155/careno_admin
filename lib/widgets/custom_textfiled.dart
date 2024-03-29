@@ -37,6 +37,7 @@ class CustomTextField extends StatefulWidget {
   final InputBorderType? borderType;
   final EdgeInsetsGeometry? padding;
   final bool? obsercureText;
+  final double? width;
 
   CustomTextField(
       {this.hint,
@@ -70,7 +71,8 @@ class CustomTextField extends StatefulWidget {
       this.enabledBorder,
       this.hintColor,
       this.borderType,
-      this.focusNode})
+      this.focusNode,
+        this.width})
       : super(key: key);
 
   final _state = _CustomTextFieldState();
@@ -120,7 +122,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
     return Container(
       // padding: EdgeInsets.only(top: 2.sp),
       height: 61.h,
-      width: 534.w,
+      width: widget.width??1155.w,
       decoration: BoxDecoration(
           // color: Color(0xffB0B0B0).withOpacity(.1),
           borderRadius: BorderRadius.circular(5.r),

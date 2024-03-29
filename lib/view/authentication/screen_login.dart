@@ -9,8 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/get_utils/get_utils.dart';
-
-import '../../constant/helpers.dart';
+import 'package:careno_admin/view/screens/screen_add_categories.dart';
 
 class ScreenLogin extends StatelessWidget {
   const ScreenLogin({Key? key}) : super(key: key);
@@ -53,13 +52,16 @@ class ScreenLogin extends StatelessWidget {
                       child: Icon(Icons.mail),
                     ),
                     padding: EdgeInsets.only(bottom: 10.h,left: 16.w),
+                    width: 534.w,
                   ),
                   CustomTextField(
                     hint: "Password",
                     suffix: Padding(
                       padding:  EdgeInsets.only(top: 6.h),
                       child: Icon(Icons.lock),
+
                     ),
+                    width: 534.w,
                     padding: EdgeInsets.only(bottom: 10.h,left: 16.w),
                   ).marginSymmetric(vertical: 30.h),
                   GestureDetector(
@@ -84,7 +86,7 @@ class ScreenLogin extends StatelessWidget {
                     ),
                   ),
                   CustomButton(title: "Sign In", onPressed: (){
-
+                    Get.to(ScreenAddCategories());
                   }).marginSymmetric(vertical: 50.h)
 
 

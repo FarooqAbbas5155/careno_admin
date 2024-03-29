@@ -44,7 +44,7 @@ class ScreenForgotPassword extends StatelessWidget {
                 ),
                 padding: EdgeInsets.only(bottom: 10.h,left: 16.w),
               ).marginSymmetric(vertical: 80.h),
-              CustomButton(title: "Send OTP", onPressed: (){
+              CustomButton(title: "Submit", onPressed: (){
 
               }),
 

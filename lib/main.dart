@@ -1,5 +1,6 @@
 import 'package:careno_admin/view/authentication/screen_login.dart';
 import 'package:careno_admin/widgets/custom_error.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,7 +9,22 @@ import 'package:get/get_navigation/src/routes/transitions_type.dart';
 
 import 'constant/colors.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Keep only one Firebase.initializeApp() call for all platforms
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(
+        apiKey: "AIzaSyD0nqeCeY8kwLDhnOLdmMw8ke6SPHq-fBA",
+        authDomain: "careno-app.firebaseapp.com",
+        projectId: "careno-app",
+        storageBucket: "careno-app.appspot.com",
+        messagingSenderId: "246128826023",
+        appId: "1:246128826023:web:12d3be65b91b5b300ded82",
+        measurementId: "G-CSNZYF8QKQ"
+
+    ),
+  );
   runApp(const MyApp());
 }
 void colorConfig() {
