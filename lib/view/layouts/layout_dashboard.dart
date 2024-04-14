@@ -1,4 +1,5 @@
 import 'package:careno_admin/constant/colors.dart';
+import 'package:careno_admin/view/screens/table.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -32,7 +33,9 @@ class LayoutDashboard extends StatelessWidget {
                 crossAxisCount: 3),
             children: [
               CustomContainer(Color(0xff0085cc), "50.k", "Total Categories",
-                  "category.png", () {}),
+                  "category.png", () {
+                Get.to(CustomTable());
+                  }),
               CustomContainer(Color(0xff27b097), "50.k", "Total Users",
                   "user.png", () {}),
               CustomContainer(Color(0xffff5252), "50.k", "Blocked Users",

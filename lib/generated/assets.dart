@@ -33,5 +33,6 @@ class Assets {
   static const String imagesProviderRequest = 'assets/images/provider_request.png';
   static const String imagesUser = 'assets/images/user.png';
   static const String imagesVehicleRequest = 'assets/images/vehicle_request.png';
+  static const String imagesVerticalBack = 'assets/images/vertical_back.png';
 
 }
