@@ -61,7 +61,7 @@ TextEditingController categoryText = TextEditingController();
               Category category = Category(
                   id: id.toString(), name: name,image: imageUrl);
               await categoryRef.doc(id.toString()).set(category.toMap()).then((value) {
-                Get.snackbar("Categor", "Add category ${category.toString()}",backgroundColor: AppColors.appPrimaryColor,colorText: Colors.white);
+                Get.snackbar("Category", "Add category ${category.toString()}",backgroundColor: AppColors.appPrimaryColor,colorText: Colors.white);
                 categoryText.clear();
               }).catchError((onError){
                 print(onError.toString());});

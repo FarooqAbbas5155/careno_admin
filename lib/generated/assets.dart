@@ -15,5 +15,16 @@ class Assets {
   static const String fontsQuicksandRegular = 'assets/fonts/Quicksand-Regular.ttf';
   static const String fontsUrbanistBold = 'assets/fonts/Urbanist-Bold.ttf';
   static const String fontsUrbanistRegular = 'assets/fonts/Urbanist-Regular.ttf';
+  static const String iconsActiveVehicel = 'assets/icons/activeVehicel.svg';
+  static const String iconsBanner = 'assets/icons/banner.svg';
+  static const String iconsCategory = 'assets/icons/category.svg';
+  static const String iconsCustomer = 'assets/icons/customer.svg';
+  static const String iconsDashboard = 'assets/icons/dashboard.svg';
+  static const String iconsLogout = 'assets/icons/logout.svg';
+  static const String iconsProvider = 'assets/icons/provider.svg';
+  static const String iconsProviderRequest = 'assets/icons/providerRequest.svg';
+  static const String iconsSetting = 'assets/icons/setting.svg';
+  static const String iconsVehicleRequest = 'assets/icons/vehicleRequest.svg';
+  static const String imagesCareno = 'assets/images/careno.png';
 
 }

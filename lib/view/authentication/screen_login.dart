@@ -1,5 +1,7 @@
 import 'package:careno_admin/constant/colors.dart';
 import 'package:careno_admin/view/authentication/screen_forgot_password.dart';
+import 'package:careno_admin/view/screens/screen_dashboard.dart';
+import 'package:careno_admin/view/screens/screen_web_home_page.dart';
 import 'package:careno_admin/widgets/custom_button.dart';
 import 'package:careno_admin/widgets/custom_textfiled.dart';
 import 'package:flutter/cupertino.dart';
@@ -86,7 +88,7 @@ class ScreenLogin extends StatelessWidget {
                     ),
                   ),
                   CustomButton(title: "Sign In", onPressed: (){
-                    Get.to(ScreenAddCategories());
+                    Get.offAll(ScreenDashboard());
                   }).marginSymmetric(vertical: 50.h)
 
 
