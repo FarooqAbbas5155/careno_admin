@@ -25,6 +25,13 @@ class Assets {
   static const String iconsProviderRequest = 'assets/icons/providerRequest.svg';
   static const String iconsSetting = 'assets/icons/setting.svg';
   static const String iconsVehicleRequest = 'assets/icons/vehicleRequest.svg';
+  static const String imagesBlockProvider = 'assets/images/block_provider.png';
+  static const String imagesBlockUser = 'assets/images/block_user.png';
   static const String imagesCareno = 'assets/images/careno.png';
+  static const String imagesCategory = 'assets/images/category.png';
+  static const String imagesProvider = 'assets/images/provider.png';
+  static const String imagesProviderRequest = 'assets/images/provider_request.png';
+  static const String imagesUser = 'assets/images/user.png';
+  static const String imagesVehicleRequest = 'assets/images/vehicle_request.png';
 
 }

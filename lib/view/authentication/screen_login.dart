@@ -89,7 +89,7 @@ class ScreenLogin extends StatelessWidget {
                   ),
                   CustomButton(title: "Sign In", onPressed: (){
                     Get.offAll(ScreenDashboard());
-                  }).marginSymmetric(vertical: 50.h)
+                  }).marginSymmetric(vertical: 45.h)
 
 
                 ],
