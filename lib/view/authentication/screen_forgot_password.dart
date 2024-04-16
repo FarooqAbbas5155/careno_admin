@@ -42,6 +42,8 @@ class ScreenForgotPassword extends StatelessWidget {
                   padding:  EdgeInsets.only(top: 6.h),
                   child: Icon(Icons.mail),
                 ),
+                width: 534.w,
+
                 padding: EdgeInsets.only(bottom: 10.h,left: 16.w),
               ).marginSymmetric(vertical: 80.h),
               CustomButton(title: "Submit", onPressed: (){

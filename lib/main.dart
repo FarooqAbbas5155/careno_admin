@@ -65,8 +65,8 @@ class _MyAppState extends State<MyApp> {
         // Use builder only if you need to use library outside ScreenUtilInit context
         builder: (_, child) {
           return GetMaterialApp(
-            // home: ScreenAthleteHomePage(),
-            home: ScreenVehicleDetails(),
+            home: ScreenLogin(),
+            // home: ScreenVehicleDetails(),
             locale: Locale('en', 'US'),
             debugShowCheckedModeBanner: false,
             defaultTransition: Transition.fade,
