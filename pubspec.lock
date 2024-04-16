@@ -97,6 +97,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.6"
+  editable:
+    dependency: "direct main"
+    description:
+      name: editable
+      sha256: d587689f2ccff750178fb9073eaf9c1eda8253bb2acc4ffa22e6009c7fa7f8fb
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   fake_async:
     dependency: transitive
     description:
@@ -376,14 +384,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.2"
-  pinput:
-    dependency: "direct main"
-    description:
-      name: pinput
-      sha256: "27eb69042f75755bdb6544f6e79a50a6ed09d6e97e2d75c8421744df1e392949"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.2.2"
   plugin_platform_interface:
     dependency: transitive
     description:

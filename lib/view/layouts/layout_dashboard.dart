@@ -1,4 +1,6 @@
 import 'package:careno_admin/constant/colors.dart';
+import 'package:careno_admin/view/screens/screeb_block_customer_list.dart';
+import 'package:careno_admin/view/screens/screen_block_provider_list.dart';
 import 'package:careno_admin/view/screens/table.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,13 +26,10 @@ class LayoutDashboard extends StatelessWidget {
                 fontSize: 50.sp,
                 fontWeight: FontWeight.w800),
           ).marginSymmetric(vertical: 20.h),
-          GridView(
-            shrinkWrap: true,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                childAspectRatio: 2.4,
-                crossAxisSpacing: 80.w,
-                mainAxisSpacing: 50.h,
-                crossAxisCount: 3),
+          Wrap(
+            spacing: 20,
+            runSpacing: 20,
+
             children: [
               CustomContainer(Color(0xff0085cc), "50.k", "Total Categories",
                   "category.png", () {
@@ -39,11 +38,15 @@ class LayoutDashboard extends StatelessWidget {
               CustomContainer(Color(0xff27b097), "50.k", "Total Users",
                   "user.png", () {}),
               CustomContainer(Color(0xffff5252), "50.k", "Blocked Users",
-                  "block_user.png", () {}),
+                  "block_user.png", () {
+                Get.to(ScreebBlockCustomerList());
+                  }),
               CustomContainer(Color(0xffafc23b), "50.k", "Total Providers",
                   "provider.png", () {}),
               CustomContainer(Color(0xff0a9bb0), "50.k", "Blocked Providers",
-                  "block_provider.png", () {}),
+                  "block_provider.png", () {
+                Get.to(ScreenBlockProviderList());
+                  }),
               CustomContainer(Color(0xff7f3bc2), "50.k", "Providers Requests",
                   "provider_request.png", () {}),
               CustomContainer(Color(0xff3f51b5), "50.k", "Vehicles Requests",
@@ -59,7 +62,7 @@ class LayoutDashboard extends StatelessWidget {
 Widget CustomContainer(Color color, String itemLength, title, imagepath,
     VoidCallback voidCallback) {
   return Container(
-    height: 138.h,
+    height: 160.h,
     width: 313.w,
     decoration:
         BoxDecoration(color: color, borderRadius: BorderRadius.circular(5.r)),

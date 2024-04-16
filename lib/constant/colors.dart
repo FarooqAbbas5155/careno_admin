@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppColors{
 
@@ -25,6 +26,15 @@ static Color starColor=Color(0xffFBC017);
 static Color dividerColor=Color(0xff999999);
 static Color dividerColor2=Color(0xffEDEEEE);
 static Color signTextColor=Color(0xff808080);
+static Color greyTextColor=Color(0xff616161);
+static Color greyHeadingTextColor=Color(0xff828282);
+static Color backGroundColor=Color(0xffF5F6FA);
+static TextStyle headingStyle=TextStyle(
+  color: appPrimaryColor,
+  fontWeight: FontWeight.w800,
+  fontSize: 45.sp,
+  fontFamily: "Nunito"
+);
 
 
 

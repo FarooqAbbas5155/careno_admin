@@ -21,12 +21,14 @@ class Assets {
   static const String iconsCustomer = 'assets/icons/customer.svg';
   static const String iconsDashboard = 'assets/icons/dashboard.svg';
   static const String iconsLogout = 'assets/icons/logout.svg';
+  static const String iconsLogout2 = 'assets/icons/logout2.svg';
   static const String iconsProvider = 'assets/icons/provider.svg';
   static const String iconsProviderRequest = 'assets/icons/providerRequest.svg';
   static const String iconsSetting = 'assets/icons/setting.svg';
   static const String iconsVehicleRequest = 'assets/icons/vehicleRequest.svg';
   static const String imagesBlockProvider = 'assets/images/block_provider.png';
   static const String imagesBlockUser = 'assets/images/block_user.png';
+  static const String imagesCar = 'assets/images/car.png';
   static const String imagesCareno = 'assets/images/careno.png';
   static const String imagesCategory = 'assets/images/category.png';
   static const String imagesProvider = 'assets/images/provider.png';

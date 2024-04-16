@@ -1,4 +1,6 @@
 import 'package:careno_admin/view/authentication/screen_login.dart';
+import 'package:careno_admin/view/screens/screen_provider_details.dart';
+import 'package:careno_admin/view/screens/screen_vehicle_details.dart';
 import 'package:careno_admin/widgets/custom_error.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -64,7 +66,7 @@ class _MyAppState extends State<MyApp> {
         builder: (_, child) {
           return GetMaterialApp(
             // home: ScreenAthleteHomePage(),
-            home: ScreenLogin(),
+            home: ScreenVehicleDetails(),
             locale: Locale('en', 'US'),
             debugShowCheckedModeBanner: false,
             defaultTransition: Transition.fade,
@@ -95,22 +97,22 @@ class _MyAppState extends State<MyApp> {
               ),
               appBarTheme: AppBarTheme(
                 // color: Colors.white,
-                backgroundColor: Colors.white,
+                backgroundColor: AppColors.backGroundColor,
                 foregroundColor: Colors.white,
-                elevation: 4,
+                elevation: 0,
                 titleTextStyle: TextStyle(
                     color: Colors.black,
                     fontSize: 20.sp,
                     fontWeight: FontWeight.w700,
                     fontFamily: "Urbanist"),
-                centerTitle: true,
+                centerTitle: false,
                 systemOverlayStyle:
                 SystemUiOverlayStyle(statusBarColor: Colors.transparent),
                 iconTheme: IconThemeData(color: Colors.black),
               ),
 
               dividerColor: Colors.transparent,
-              scaffoldBackgroundColor: Colors.white,
+              scaffoldBackgroundColor: AppColors.backGroundColor,
               backgroundColor: Colors.white,
               useMaterial3: false,
 
