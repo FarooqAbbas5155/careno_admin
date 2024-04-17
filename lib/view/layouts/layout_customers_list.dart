@@ -1,9 +1,14 @@
+import 'package:careno_admin/widgets/custom_button.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../constant/CustomDialog.dart';
 import '../../constant/colors.dart';
+import '../screens/screen_chat.dart';
+import '../screens/screen_user_details.dart';
 
 class LayoutCustomersList extends StatelessWidget {
  List<String> list=["Block User"];
@@ -74,11 +79,18 @@ class LayoutCustomersList extends StatelessWidget {
                                 "Gender",
                                 style: TextStyle(color: Colors.white),
                               ).paddingSymmetric(horizontal: 20.w)),
+
                               DataColumn(
                                   label: Text(
                                 "Action",
                                 style: TextStyle(color: Colors.white),
                               ).paddingSymmetric(horizontal: 20.w)),
+                              DataColumn(
+                                  label: Text(
+                                    "Details",
+                                    style: TextStyle(color: Colors.white),
+                                  ).paddingSymmetric(horizontal: 20.w)),
+
                             ],
                             rows: List.generate(20, (index) {
                               return DataRow(cells: [
@@ -97,6 +109,8 @@ class LayoutCustomersList extends StatelessWidget {
                                     .paddingSymmetric(horizontal: 20.w)),
                                 DataCell(Text("Male")
                                     .paddingSymmetric(horizontal: 20.w)),
+
+
                                 DataCell(
                                   PopupMenuButton<String>(
                                     icon: Icon(Icons.more_vert),
@@ -161,8 +175,14 @@ class LayoutCustomersList extends StatelessWidget {
 
                                     },
                                   ),
-                                )
-
+                                ),
+                                DataCell(CustomButton(
+                                  width: 130.w,
+                                  height: 45.h,
+                                  title: 'View', onPressed: () {
+                                  Get.to(ScreenUserDetails(userType: 'user',));
+                                },)
+                                    .paddingSymmetric(horizontal: 20.w)),
                                 // DataCell(Text("Test")),
                               ]);
                             })),

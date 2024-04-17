@@ -6,6 +6,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../widgets/custom_svg.dart';
+
 class ScreenProviderDetails extends StatelessWidget {
   const ScreenProviderDetails({Key? key}) : super(key: key);
 
@@ -13,6 +15,26 @@ class ScreenProviderDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: GestureDetector(
+          onTap: (){
+            Get.back();
+          },
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(width: 10.w,),
+              CustomSvg(name: "arrow",),
+
+              Expanded(
+                child: CircleAvatar(
+                    radius: 35.r,
+                    backgroundImage:AssetImage("assets/images/profile.png")
+                ),
+              ),
+
+            ],
+          ),
+        ),
         title: Text(
           "Provider Details",
           style: TextStyle(

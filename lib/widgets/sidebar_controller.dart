@@ -13,6 +13,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../view/layouts/layout_messages.dart';
+
 
 class SidebarController extends GetxController{
   RxInt _index = 0.obs;
@@ -31,6 +33,7 @@ class SidebarController extends GetxController{
     Sidebar(icon: "assets/icons/activeVehicel.svg", title: "Active Vehicle",fontSize: 14),
     Sidebar(icon: "assets/icons/banner.svg", title: "Promotional Banner",fontSize: 14),
     Sidebar(icon: "assets/icons/setting.svg", title: "Settings",fontSize: 14),
+    Sidebar(icon: "assets/icons/message.svg", title: "Message",fontSize: 14,),
     Sidebar(icon: "assets/icons/logout.svg", title: "Logout",fontSize: 16),
   ];
 
@@ -46,7 +49,8 @@ class SidebarController extends GetxController{
     LayoutActiveVehicles(),
     LayoutPromotionalBanner(),
     LayoutSettings(),
-    LayoutLogout()
+    LayoutMessages(),
+    LayoutLogout(),
 
   ];
 }

@@ -4,22 +4,22 @@ import 'package:get/get.dart';
 
 import '../../constant/colors.dart';
 import '../../widgets/custom_button.dart';
-import '../screens/screen_vehicle_details.dart';
+import '../screens/screen_provider_vehicle_details.dart';
 
-class LayoutActiveVehicles extends StatelessWidget {
-  const LayoutActiveVehicles({Key? key}) : super(key: key);
+class LayoutProviderVehicle extends StatelessWidget {
+  const LayoutProviderVehicle({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-         return Scaffold(
-           body: Container(
-                 padding: EdgeInsets.symmetric(horizontal: 30.w),
-                 color: AppColors.backGroundColor,
-                 child: Column(
-                   crossAxisAlignment: CrossAxisAlignment.start,
-                   children: [
+    return Scaffold(
+      body: Container(
+        padding: EdgeInsets.symmetric(horizontal: 30.w),
+        color: AppColors.backGroundColor,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
             Text(
-              "Active Vehicle",
+              "Provider Vehicles",
               style: AppColors.headingStyle,
             ).marginSymmetric(vertical: 10.h),
             Expanded(
@@ -77,7 +77,7 @@ class LayoutActiveVehicles extends StatelessWidget {
                                       "Rate Per Hour",
                                       style: TextStyle(color: Colors.white),
                                     ).paddingSymmetric(horizontal: 20.w)),
-           
+
                                 DataColumn(
                                     label: Text(
                                       "Action",
@@ -105,6 +105,8 @@ class LayoutActiveVehicles extends StatelessWidget {
                                     CustomButton(
                                       title: "View",
                                       onPressed: () {
+                                        Get.to(ScreenProviderVehicleDetails());
+
                                       },
                                       height: 41.h,
                                       width: 100.w,
@@ -114,7 +116,7 @@ class LayoutActiveVehicles extends StatelessWidget {
                                           fontWeight: FontWeight.w500),
                                     ),
                                   )
-           
+
                                   // DataCell(Text("Test")),
                                 ]);
                               })),
@@ -125,10 +127,9 @@ class LayoutActiveVehicles extends StatelessWidget {
                 ),
               ),
             ),
-                   ],
-                 ),
-               ),
-         );
-
+          ],
+        ),
+      ),
+    );
   }
 }
