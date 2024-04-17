@@ -100,7 +100,7 @@ class LayoutCategoriesList extends StatelessWidget {
                                         backgroundImage:
                                             AssetImage("assets/images/car.png")).paddingSymmetric(horizontal: 20.w),
                                   ),
-                                  DataCell(Expanded(child: Text("No Data")).paddingSymmetric(horizontal: 40.w)),
+                                  DataCell(Text("No Data").paddingSymmetric(horizontal: 40.w)),
                                   DataCell(
                                       CustomButton(
                                     title: "Edit",

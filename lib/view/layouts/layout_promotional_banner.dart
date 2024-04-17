@@ -102,8 +102,8 @@ class LayoutPromotionalBanner extends StatelessWidget {
                                       backgroundImage:
                                       AssetImage("assets/images/car.png")).paddingSymmetric(horizontal: 20.w),
                                 ),
-                                DataCell(Expanded(child: Text("https//:dfhgdiufyikrhwiouasrwabniku")).paddingSymmetric(horizontal: 40.w)),
-                                DataCell(Expanded(child: Text("Expired")).paddingSymmetric(horizontal: 40.w)),
+                                DataCell(Text("https//:dfhgdiufyikrhwiouasrwabniku").paddingSymmetric(horizontal: 40.w)),
+                                DataCell(Text("Expired").paddingSymmetric(horizontal: 40.w)),
                                 DataCell(
                                   Row(
                                     children: <Widget>[

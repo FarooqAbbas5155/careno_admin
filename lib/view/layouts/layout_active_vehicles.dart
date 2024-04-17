@@ -91,13 +91,13 @@ class LayoutActiveVehicles extends StatelessWidget {
                                           "assets/images/car.png"))
                                       .paddingSymmetric(horizontal: 20.w),
                                 ),
-                                DataCell(Expanded(child: Text("Tesla Model 3"))
+                                DataCell(Text("Tesla Model 3")
                                     .paddingSymmetric(horizontal: 20.w)),
-                                DataCell(Expanded(child: Text("Street 2, House No, City, New York, United State"))
+                                DataCell(Text("Street 2, House No, City, New York, United State")
                                     .paddingSymmetric(horizontal: 20.w)),
-                                DataCell(Expanded(child: Text("\$ 150"))
+                                DataCell(Text("\$ 150")
                                     .paddingSymmetric(horizontal: 20.w)),
-                                DataCell(Expanded(child: Text("\$ 15"))
+                                DataCell(Text("\$ 15")
                                     .paddingSymmetric(horizontal: 20.w)),
                                 DataCell(
                                   CustomButton(

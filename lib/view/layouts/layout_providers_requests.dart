@@ -87,11 +87,11 @@ class LayoutProvidersRequests extends StatelessWidget {
                                           "assets/images/car.png"))
                                       .paddingSymmetric(horizontal: 20.w),
                                 ),
-                                DataCell(Expanded(child: Text("Name"))
+                                DataCell(Text("Name")
                                     .paddingSymmetric(horizontal: 20.w)),
-                                DataCell(Expanded(child: Text("+343434767676"))
+                                DataCell(Text("+343434767676")
                                     .paddingSymmetric(horizontal: 20.w)),
-                                DataCell(Expanded(child: Text("ab@gmail.com"))
+                                DataCell(Text("ab@gmail.com")
                                     .paddingSymmetric(horizontal: 20.w)),
                                 DataCell(
                                   Row(
