@@ -5,6 +5,8 @@ import 'package:careno_admin/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
+import '../constant/fcm.dart';
+
 class HomeController extends GetxController{
 
 
@@ -29,6 +31,7 @@ Stream<QuerySnapshot>? VehicelRequestSnapshot; // Es Ka variable modelClass maay
 Stream<QuerySnapshot>?  categorySnapshot;
 @override
 void onInit(){
+  updateToken();
   userSnapshot = usersRef.where("userType", isEqualTo: "user").snapshots();
   user.bindStream(userSnapshot!.map((event) => event.docs.map((e) => User.fromMap(e.data() as Map<String,dynamic>)).toList()));
   BlockuserSnapshot = usersRef.where("userType", isEqualTo: "user").where("isBlocked",isEqualTo: true).snapshots();
@@ -50,5 +53,8 @@ void onInit(){
   super.onInit();
 
 }
-
+void updateToken() async {
+  var token = (await FCM.generateToken()) ?? "";
+  usersRef.doc(uid).update({"notificationToken": token});
+}
 }

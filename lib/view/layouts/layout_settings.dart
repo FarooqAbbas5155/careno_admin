@@ -1,3 +1,4 @@
+import 'package:careno_admin/controllers/service_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -8,10 +9,11 @@ import '../../widgets/custom_button.dart';
 import '../../widgets/custom_textfiled.dart';
 
 class LayoutSettings extends StatelessWidget {
-  const LayoutSettings({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
+    PercentageController percentageController = Get.put(PercentageController());
+
+    print("kjhskhjk ${percentageController.categoryId}");
     return Scaffold(
       appBar: AppBar(
           centerTitle: false,
@@ -50,11 +52,13 @@ class LayoutSettings extends StatelessWidget {
                   children: [
                     Text("Set Service Charges",style: TextStyle(color: Colors.black,fontWeight: FontWeight.w700,fontFamily: "Nunito",fontSize: 22.sp),).marginOnly(top: 25.h,bottom: 5.h),
                     CustomTextField(
-                      hint: "20 %",
+                      controller: percentageController.percentageController.value,
+                      text: percentageController.percentageController.value.text,
                     ),
 
-
-                    CustomButton(title: "Update", onPressed: ()async{ }).marginSymmetric(vertical: 30.h)
+                    CustomButton(title: "Update", onPressed: ()async{
+                      await percentageController.SetPercentage();
+                    }).marginSymmetric(vertical: 30.h)
                   ],).marginSymmetric(horizontal: 15.w)
               ],),
           )

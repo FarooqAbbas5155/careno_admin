@@ -19,11 +19,13 @@ void main() async{
     options: const FirebaseOptions(
         apiKey: "AIzaSyD0nqeCeY8kwLDhnOLdmMw8ke6SPHq-fBA",
         authDomain: "careno-app.firebaseapp.com",
+        databaseURL: "https://careno-app-default-rtdb.firebaseio.com",
         projectId: "careno-app",
         storageBucket: "careno-app.appspot.com",
         messagingSenderId: "246128826023",
         appId: "1:246128826023:web:12d3be65b91b5b300ded82",
         measurementId: "G-CSNZYF8QKQ"
+
 
     ),
   );

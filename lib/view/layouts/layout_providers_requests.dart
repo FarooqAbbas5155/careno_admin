@@ -1,3 +1,5 @@
+import 'package:careno_admin/constant/helpers.dart';
+import 'package:careno_admin/controllers/home_controller.dart';
 import 'package:careno_admin/view/screens/screen_provider_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,11 +9,12 @@ import '../../constant/CustomDialog.dart';
 import '../../constant/colors.dart';
 import '../../widgets/custom_button.dart';
 class LayoutProvidersRequests extends StatelessWidget {
-  const LayoutProvidersRequests({Key? key}) : super(key: key);
-
+HomeController controller = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
-    return Container(
+    print(controller.hostRequest.value.length);
+
+    return controller.hostRequest.value.isNotEmpty?Container(
       padding: EdgeInsets.symmetric(horizontal: 30.w),
       color: AppColors.backGroundColor,
       child: Column(
@@ -78,20 +81,23 @@ class LayoutProvidersRequests extends StatelessWidget {
                                     style: TextStyle(color: Colors.white),
                                   ).paddingSymmetric(horizontal: 20.w)),
                             ],
-                            rows: List.generate(20, (index) {
+                            rows: List.generate(controller.hostRequest.value.length, (index) {
+                              var host = controller.hostRequest.value[index];
                               return DataRow(cells: [
                                 DataCell(
                                   CircleAvatar(
                                       radius: 45.r,
-                                      backgroundImage: AssetImage(
-                                          "assets/images/car.png"))
+                                      backgroundImage:NetworkImage(host.imageUrl.isEmpty?image_url:host.imageUrl)
+                                      // AssetImage(
+                                      //     "assets/images/car.png")
+                                  )
                                       .paddingSymmetric(horizontal: 20.w),
                                 ),
-                                DataCell(Text("Name")
+                                DataCell(Text(host.name)
                                     .paddingSymmetric(horizontal: 20.w)),
-                                DataCell(Text("+343434767676")
+                                DataCell(Text(host.phoneNumber)
                                     .paddingSymmetric(horizontal: 20.w)),
-                                DataCell(Text("ab@gmail.com")
+                                DataCell(Text(host.email)
                                     .paddingSymmetric(horizontal: 20.w)),
                                 DataCell(
                                   Row(
@@ -99,7 +105,7 @@ class LayoutProvidersRequests extends StatelessWidget {
                                       CustomButton(
                                         title: "View",
                                         onPressed: () {
-                                          Get.to(ScreenProviderDetails());
+                                          Get.to(ScreenProviderDetails(host: host,));
 
                                         },
                                         height: 41.h,
@@ -118,7 +124,11 @@ class LayoutProvidersRequests extends StatelessWidget {
                                         textStyle: TextStyle(
                                             color: Colors.white,
                                             fontSize: 18.sp,
-                                            fontWeight: FontWeight.w500), onPressed: () {  },
+                                            fontWeight: FontWeight.w500), onPressed: () async{
+                                        await usersRef.doc(host.uid).update({"isVerified": true}).then((value) {
+                                          Get.snackbar("Alert", "Successfully Account Approved",backgroundColor: AppColors.appPrimaryColor,colorText: Colors.white);
+                                        });
+                                      },
 
                                       ).marginSymmetric(horizontal: 10.w),
                                       CustomButton(
@@ -149,6 +159,8 @@ class LayoutProvidersRequests extends StatelessWidget {
           ),
         ],
       ),
+    ):Center(
+      child: Text("No Request Found yet",style: TextStyle(fontSize: 20.sp,fontWeight: FontWeight.w600,fontFamily: "Nunito"),),
     );
   }
 }

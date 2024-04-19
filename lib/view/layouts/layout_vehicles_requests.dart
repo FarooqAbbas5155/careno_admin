@@ -1,3 +1,5 @@
+import 'package:careno_admin/constant/helpers.dart';
+import 'package:careno_admin/controllers/home_controller.dart';
 import 'package:careno_admin/view/screens/screen_vehicle_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,8 +9,7 @@ import '../../constant/colors.dart';
 import '../../widgets/custom_button.dart';
 
 class LayoutVehiclesRequests extends StatelessWidget {
-  const LayoutVehiclesRequests({Key? key}) : super(key: key);
-
+HomeController controller = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,7 +22,7 @@ class LayoutVehiclesRequests extends StatelessWidget {
             "Vehicle Requests",
             style: AppColors.headingStyle,
           ).marginSymmetric(vertical: 10.h),
-          Expanded(
+       controller.vehiclesRequest.value.isNotEmpty? Expanded(
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 20.w),
               margin: EdgeInsets.symmetric(
@@ -83,22 +84,24 @@ class LayoutVehiclesRequests extends StatelessWidget {
                                     style: TextStyle(color: Colors.white),
                                   ).paddingSymmetric(horizontal: 20.w)),
                             ],
-                            rows: List.generate(20, (index) {
+                            rows: List.generate(controller.vehiclesRequest.value.length, (index) {
+                              var vehicle = controller.vehiclesRequest.value[index];
                               return DataRow(cells: [
                                 DataCell(
                                   CircleAvatar(
                                       radius: 45.r,
-                                      backgroundImage: AssetImage(
-                                          "assets/images/car.png"))
+                                      backgroundImage:NetworkImage(vehicle.vehicleImageComplete)
+                                      // AssetImage("assets/images/car.png")
+                              )
                                       .paddingSymmetric(horizontal: 20.w),
                                 ),
-                                DataCell(Text("Tesla Model 3")
+                                DataCell(Text(vehicle.vehicleModel)
                                     .paddingSymmetric(horizontal: 20.w)),
-                                DataCell(Text("Street 2, House No, City, New York, United State")
+                                DataCell(Text(vehicle.address)
                                     .paddingSymmetric(horizontal: 20.w)),
-                                DataCell(Text("\$ 150")
+                                DataCell(Text("\$ ${vehicle.vehiclePerDayRent}")
                                     .paddingSymmetric(horizontal: 20.w)),
-                                DataCell(Text("\$ 15")
+                                DataCell(Text("\$ ${vehicle.vehiclePerHourRent}")
                                     .paddingSymmetric(horizontal: 20.w)),
                                 DataCell(
                                   Row(
@@ -106,7 +109,7 @@ class LayoutVehiclesRequests extends StatelessWidget {
                                       CustomButton(
                                         title: "View",
                                         onPressed: () {
-                                          Get.to(ScreenVehicleDetails(status: 'Pending',));
+                                          Get.to(ScreenVehicleDetails(status: 'Pending',vehicle: vehicle,));
                                         },
                                         height: 41.h,
                                         width: 100.w,
@@ -124,7 +127,12 @@ class LayoutVehiclesRequests extends StatelessWidget {
                                         textStyle: TextStyle(
                                             color: Colors.white,
                                             fontSize: 18.sp,
-                                            fontWeight: FontWeight.w500), onPressed: () {  },
+                                            fontWeight: FontWeight.w500), onPressed: ()async { 
+                                          await addVehicleRef.doc(vehicle.vehicleId).update({"isVerified":true}).then((value) {
+
+                                            Get.snackbar("Alert", "Successfully Aproved vehicel",backgroundColor: Colors.red,colorText: Colors.white);
+                                          });
+                                      },
 
                                       ).marginSymmetric(horizontal: 10.w),
                                       CustomButton(
@@ -152,8 +160,10 @@ class LayoutVehiclesRequests extends StatelessWidget {
                 ),
               ),
             ),
-          ),
-        ],
+          ):    Center(
+           child: Text("No Vehicle Request Found yet",style: TextStyle(fontSize: 20.sp,fontWeight: FontWeight.w600,fontFamily: "Nunito")
+
+           ) )],
       ),
     );
   }

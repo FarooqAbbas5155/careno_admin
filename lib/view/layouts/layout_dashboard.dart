@@ -10,9 +10,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class LayoutDashboard extends StatelessWidget {
-HomeController controller = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
+    HomeController controller = Get.put(HomeController());
+
     return Scaffold(
       backgroundColor: Color(0xfff5f6fa),
       body: Column(

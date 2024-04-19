@@ -1,5 +1,6 @@
 import 'package:careno_admin/constant/CustomDialog.dart';
 import 'package:careno_admin/constant/colors.dart';
+import 'package:careno_admin/constant/helpers.dart';
 import 'package:careno_admin/view/screens/screen_add_categories.dart';
 import 'package:careno_admin/widgets/custom_button.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,9 +8,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../controllers/home_controller.dart';
+
 class LayoutCategoriesList extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
+    HomeController controller = Get.put(HomeController());
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 30.w),
       color: AppColors.backGroundColor,
@@ -45,7 +50,7 @@ class LayoutCategoriesList extends StatelessWidget {
               ),
             ),
           ),
-          Expanded(
+      controller.categories.value.isNotEmpty? Expanded(
             child: Container(
               padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 20.w),
               margin: EdgeInsets.symmetric(vertical: 15.h,),
@@ -92,20 +97,22 @@ class LayoutCategoriesList extends StatelessWidget {
                                     style: TextStyle(color: Colors.white),
                                   ).paddingSymmetric(horizontal: 20.w)),
                               ],
-                              rows: List.generate(20, (index) {
+                              rows: List.generate(controller.categories.value.length, (index) {
+                                var category = controller.categories.value[index];
                                 return DataRow(cells: [
                                   DataCell(
                                     CircleAvatar(
                                         radius: 45.r,
-                                        backgroundImage:
-                                            AssetImage("assets/images/car.png")).paddingSymmetric(horizontal: 20.w),
+                                        backgroundImage:NetworkImage(category.image),
+                                            // AssetImage("assets/images/car.png")
+                                    ).paddingSymmetric(horizontal: 20.w),
                                   ),
-                                  DataCell(Text("No Data").paddingSymmetric(horizontal: 40.w)),
+                                  DataCell(Text(category.name).paddingSymmetric(horizontal: 40.w)),
                                   DataCell(
                                       CustomButton(
                                     title: "Edit",
                                     onPressed: () {
-                                      Get.to(ScreenAddCategories(status: "Update"));
+                                      Get.to(ScreenAddCategories(status: "Update", category: category,));
                                     },
                                     height: 38.h,
                                     width: 90.w,
@@ -142,14 +149,22 @@ class LayoutCategoriesList extends StatelessWidget {
                                                       style: OutlinedButton.styleFrom(
                                                         backgroundColor: AppColors.appPrimaryColor,
                                                       ),
-                                                      onPressed: (){}, child: Text("Ok",style: TextStyle(
+                                                      onPressed: (){
+                                                        categoryRef.doc(category.id).delete().then((value) {
+                                                          Get.snackbar("Successfully", "Delete Category => ${category.name}",backgroundColor: AppColors.appPrimaryColor,colorText: Colors.white);
+
+                                                          Get.back();
+                                                        });
+                                                      }, child: Text("Ok",style: TextStyle(
                                                     color: Colors.white,
                                                     fontSize: 18.sp,
                                                     fontWeight: FontWeight.w500
                                                   ),)).marginOnly(right: 20.w
                                                   ),
 
-                                                  OutlinedButton(onPressed: (){}, child: Text("Cancel")),
+                                                  OutlinedButton(onPressed: (){
+                                                    Get.back();
+                                                  }, child: Text("Cancel")),
                                                 ]
                                               ),
                                             ],
@@ -174,7 +189,9 @@ class LayoutCategoriesList extends StatelessWidget {
                 ),
               ),
             ),
-          ),
+          ):    Center(
+          child: Text("No Category Found yet",style: TextStyle(fontSize: 20.sp,fontWeight: FontWeight.w600,fontFamily: "Nunito"),)
+      )
         ],
       ),
     );

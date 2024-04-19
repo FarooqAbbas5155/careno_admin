@@ -13,11 +13,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../controllers/home_controller.dart';
 import '../view/layouts/layout_messages.dart';
 
 
 class SidebarController extends GetxController{
-  RxInt _index = 0.obs;
+  HomeController controller = Get.put(HomeController());
+
+  void onInit() {
+    print(controller.user.value.length);
+    controller.update();
+    super.onInit();
+
+  }
+    RxInt _index = 0.obs;
 
   int get index => _index.value;
 

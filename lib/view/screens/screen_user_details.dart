@@ -1,8 +1,11 @@
+import 'package:careno_admin/constant/helpers.dart';
+import 'package:careno_admin/models/user.dart';
 import 'package:careno_admin/view/layouts/layout_active_booking.dart';
 import 'package:careno_admin/view/screens/screen_chat.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../constant/colors.dart';
 import '../../widgets/custom_button.dart';
@@ -10,9 +13,12 @@ import '../layouts/layout_active_vehicles.dart';
 import '../layouts/layout_customer_booking.dart';
 
 class ScreenUserDetails extends StatelessWidget {
+  User user;
 String userType;
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
 
@@ -23,11 +29,14 @@ String userType;
 
 ScreenUserDetails({
     required this.userType,
+    required this.user,
   });
 
 
 
 Widget buildDetails() {
+  DateTime dobDateTime = DateTime.fromMillisecondsSinceEpoch(user!.dob);
+  String formattedDate = DateFormat('d MMMM yyyy ').format(dobDateTime);
   return Container(
     width: 800.w,
     padding: EdgeInsets.only(left: 30.w,bottom: 30,top: 30,right: 50),
@@ -57,7 +66,7 @@ Widget buildDetails() {
                     fontWeight: FontWeight.w700,
                     color: Colors.black
                 ),),
-                Text("\$300",style: TextStyle(
+                Text("\$${user.currentBalance}",style: TextStyle(
                     fontFamily: "Quicksand",
                     fontSize: 24.sp,
                     fontWeight: FontWeight.w700,
@@ -81,17 +90,20 @@ Widget buildDetails() {
               width: 75.w,
               decoration: BoxDecoration(
 
-                  image: DecorationImage(image: AssetImage("assets/images/user-image.png"))
+                  image: DecorationImage(
+                      image: NetworkImage(user.imageUrl.isEmpty?image_url:user.imageUrl)
+                      // AssetImage("assets/images/user-image.png")
+                  )
               ),).marginOnly(right: 15.w),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text("Kristin Watson",style: TextStyle(
+                Text(user.name,style: TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 18.sp,
                     color: Colors.black
                 ),),
-                Text("Street 2, House No, City, New York, United State",style: TextStyle(
+                Text(user.address,style: TextStyle(
                     fontSize: 11.sp,
                     color: AppColors.appPrimaryColor,
                     fontWeight: FontWeight.w300,
@@ -112,7 +124,7 @@ Widget buildDetails() {
                     fontSize: 13.sp
                 ),
                 children: [
-                  TextSpan(text: " 21 January, 0020",style: TextStyle(
+                  TextSpan(text: " ${formattedDate}",style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 14.sp
                   )
@@ -127,7 +139,7 @@ Widget buildDetails() {
                     fontSize: 13.sp
                 ),
                 children: [
-                  TextSpan(text: " Male",style: TextStyle(
+                  TextSpan(text: " ${user.gender}",style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 14.sp
                   )
@@ -144,7 +156,7 @@ Widget buildDetails() {
                     fontSize: 13.sp
                 ),
                 children: [
-                  TextSpan(text: " example45.@gmail.com",style: TextStyle(
+                  TextSpan(text: " ${user.email}",style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 14.sp
                   )
@@ -159,7 +171,7 @@ Widget buildDetails() {
                     fontSize: 13.sp
                 ),
                 children: [
-                  TextSpan(text: "  +1 548 3435 547",style: TextStyle(
+                  TextSpan(text: "  ${user.email}",style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 14.sp
                   )
@@ -167,7 +179,7 @@ Widget buildDetails() {
             )),
           ),
         ],).marginSymmetric(vertical: 10.h),
-        Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",style: TextStyle(
+        Text(user.profileDescription,style: TextStyle(
             fontSize: 11.sp,
             fontWeight: FontWeight.w500,
             color: Color(0xFF828282)
@@ -211,7 +223,7 @@ Widget buildDetails() {
             ),
 
             title: "Send Message", onPressed: (){
-              Get.to(ScreenChat());
+              Get.to(ScreenChat(user: user,));
           },color: Color(0xFF0F9D58),)),
         ],).marginSymmetric(vertical: 8.h)
       ],

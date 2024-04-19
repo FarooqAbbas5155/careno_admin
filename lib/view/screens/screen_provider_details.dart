@@ -1,18 +1,25 @@
 import 'package:careno_admin/constant/colors.dart';
+import 'package:careno_admin/constant/helpers.dart';
+import 'package:careno_admin/models/user.dart';
 import 'package:careno_admin/widgets/custom_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../widgets/custom_svg.dart';
 
 class ScreenProviderDetails extends StatelessWidget {
-  const ScreenProviderDetails({Key? key}) : super(key: key);
-
+User host;
+String DateOfBirth = "";
   @override
   Widget build(BuildContext context) {
+    DateTime parsedDate = DateFormat("dd MMMM, yyyy").parse(host.dob.toString());
+
+    // Format the DateTime object into the desired output format
+     DateOfBirth = DateFormat("dd MMMM, yyyy").format(parsedDate);
     return Scaffold(
       appBar: AppBar(
         leading: GestureDetector(
@@ -28,7 +35,9 @@ class ScreenProviderDetails extends StatelessWidget {
               Expanded(
                 child: CircleAvatar(
                     radius: 35.r,
-                    backgroundImage:AssetImage("assets/images/profile.png")
+                    backgroundImage:NetworkImage(host.imageUrl)
+
+                    // AssetImage("assets/images/profile.png")
                 ),
               ),
 
@@ -99,17 +108,20 @@ class ScreenProviderDetails extends StatelessWidget {
                 width: 75.w,
                 decoration: BoxDecoration(
                   
-                image: DecorationImage(image: AssetImage("assets/images/user-image.png"))
+                image: DecorationImage(
+                    image:NetworkImage(host.imageUrl.isEmpty?image_url:host.imageUrl)
+                    // AssetImage("assets/images/user-image.png")
+                )
               ),).marginOnly(right: 15.w),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text("Kristin Watson",style: TextStyle(
+                  Text(host.name,style: TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 18.sp,
                     color: Colors.black
                   ),),
-                  Text("Street 2, House No, City, New York, United State",style: TextStyle(
+                  Text(host.address,style: TextStyle(
                     fontSize: 11.sp,
                     color: AppColors.appPrimaryColor,
                     fontWeight: FontWeight.w300,
@@ -130,7 +142,8 @@ class ScreenProviderDetails extends StatelessWidget {
                       fontSize: 13.sp
                   ),
                 children: [
-                  TextSpan(text: " 21 January, 0020",style: TextStyle(
+                  TextSpan(
+                      text:  "${DateOfBirth}",style: TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: 14.sp
               )
@@ -145,7 +158,7 @@ class ScreenProviderDetails extends StatelessWidget {
                       fontSize: 13.sp
                   ),
                 children: [
-                  TextSpan(text: " Male",style: TextStyle(
+                  TextSpan(text: " ${host.gender}",style: TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: 14.sp
               )
@@ -162,7 +175,7 @@ class ScreenProviderDetails extends StatelessWidget {
                       fontSize: 13.sp
                   ),
                 children: [
-                  TextSpan(text: " example45.@gmail.com",style: TextStyle(
+                  TextSpan(text: " ${host.email}",style: TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: 14.sp
               )
@@ -177,7 +190,7 @@ class ScreenProviderDetails extends StatelessWidget {
                       fontSize: 13.sp
                   ),
                 children: [
-                  TextSpan(text: "  +1 548 3435 547",style: TextStyle(
+                  TextSpan(text: "  ${host.phoneNumber}",style: TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: 14.sp
               )
@@ -185,7 +198,7 @@ class ScreenProviderDetails extends StatelessWidget {
               )),
             ),
           ],).marginSymmetric(vertical: 10.h),
-          Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",style: TextStyle(
+          Text(host.profileDescription,style: TextStyle(
             fontSize: 11.sp,
             fontWeight: FontWeight.w500,
             color: Color(0xFF828282)
@@ -200,7 +213,9 @@ class ScreenProviderDetails extends StatelessWidget {
                   fontSize: 15.sp,
                   fontWeight: FontWeight.w700
               ),
-              title: "Decline Account", onPressed: (){},color: Color(0xFFFE0000),)),
+              title: "Decline Account", onPressed: (){
+
+            },color: Color(0xFFFE0000),)),
            SizedBox(width: 20.w,), Expanded(child
                 : CustomButton(
               height: 46.h,
@@ -210,7 +225,11 @@ class ScreenProviderDetails extends StatelessWidget {
                 fontWeight: FontWeight.w700
               ),
 
-              title: "Approve Account", onPressed: (){},color: Color(0xFF0F9D58),)),
+              title: "Approve Account", onPressed: ()async{
+                await usersRef.doc(host.uid).update({"isVerified": true}).then((value) {
+                  Get.snackbar("Alert", "Account Approved",backgroundColor: AppColors.appPrimaryColor,colorText: Colors.white);
+                });
+            },color: Color(0xFF0F9D58),)),
           ],).marginSymmetric(vertical: 8.h)
         ],
       ),
@@ -241,7 +260,8 @@ class ScreenProviderDetails extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.white,
                     image: DecorationImage(
-                      image: AssetImage("assets/images/insurance.png"),
+                      image: NetworkImage(host.hostIdentity!.insurancePath)
+                      // AssetImage("assets/images/insurance.png"),
                     )
                 ),
               ),
@@ -274,7 +294,8 @@ class ScreenProviderDetails extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.white,
                     image: DecorationImage(
-                      image: AssetImage("assets/images/insurance.png"),
+                      image: NetworkImage(host.hostIdentity!.idFrontPath)
+                      // AssetImage("assets/images/insurance.png"),
                     )
                 ),
               ),
@@ -307,7 +328,8 @@ class ScreenProviderDetails extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.white,
                     image: DecorationImage(
-                      image: AssetImage("assets/images/insurance.png"),
+                      image: NetworkImage(host.hostIdentity!.idBackPath),
+                      // AssetImage("assets/images/insurance.png"),
                     )
                 ),
               ),
@@ -318,4 +340,8 @@ class ScreenProviderDetails extends StatelessWidget {
       ),
     );
   }
+
+ScreenProviderDetails({
+    required this.host,
+  });
 }

@@ -40,6 +40,7 @@ class Assets {
   static const String imagesFullCar = 'assets/images/full_car.png';
   static const String imagesInsurance = 'assets/images/insurance.png';
   static const String imagesMessage = 'assets/images/message.png';
+  static const String imagesNothing = 'assets/images/nothing.png';
   static const String imagesProfile = 'assets/images/profile.png';
   static const String imagesProvider = 'assets/images/provider.png';
   static const String imagesProviderRequest = 'assets/images/provider_request.png';

@@ -1,3 +1,4 @@
+import 'package:careno_admin/constant/helpers.dart';
 import 'package:careno_admin/widgets/custom_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,14 +8,17 @@ import 'package:get/get.dart';
 
 import '../../constant/CustomDialog.dart';
 import '../../constant/colors.dart';
+import '../../controllers/home_controller.dart';
 import '../screens/screen_chat.dart';
 import '../screens/screen_user_details.dart';
 
 class LayoutCustomersList extends StatelessWidget {
- List<String> list=["Block User"];
+  HomeController controller = Get.put(HomeController());
+
+  List<String> list=["Block User"];
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return controller.user.value.isNotEmpty? Container(
       padding: EdgeInsets.symmetric(horizontal: 30.w),
       color: AppColors.backGroundColor,
       child: Column(
@@ -92,22 +96,25 @@ class LayoutCustomersList extends StatelessWidget {
                                   ).paddingSymmetric(horizontal: 20.w)),
 
                             ],
-                            rows: List.generate(20, (index) {
+                            rows: List.generate(controller.user.value.length, (index) {
+                              var user = controller.user.value[index];
                               return DataRow(cells: [
                                 DataCell(
                                   CircleAvatar(
                                           radius: 45.r,
-                                          backgroundImage: AssetImage(
-                                              "assets/images/car.png"))
+                                          backgroundImage:NetworkImage(user.imageUrl.isEmpty?image_url:user.imageUrl)
+                                          // AssetImage(
+                                          //     "assets/images/car.png")
+                                  )
                                       .paddingSymmetric(horizontal: 20.w),
                                 ),
-                                DataCell(Text("Name")
+                                DataCell(Text(user.name)
                                     .paddingSymmetric(horizontal: 20.w)),
-                                DataCell(Text("+343434767676")
+                                DataCell(Text(user.phoneNumber)
                                     .paddingSymmetric(horizontal: 20.w)),
-                                DataCell(Text("ab@gmail.com")
+                                DataCell(Text(user.email)
                                     .paddingSymmetric(horizontal: 20.w)),
-                                DataCell(Text("Male")
+                                DataCell(Text(user.gender)
                                     .paddingSymmetric(horizontal: 20.w)),
 
 
@@ -180,7 +187,7 @@ class LayoutCustomersList extends StatelessWidget {
                                   width: 130.w,
                                   height: 45.h,
                                   title: 'View', onPressed: () {
-                                  Get.to(ScreenUserDetails(userType: 'user',));
+                                  Get.to(ScreenUserDetails(userType: 'user', user: user,));
                                 },)
                                     .paddingSymmetric(horizontal: 20.w)),
                                 // DataCell(Text("Test")),
@@ -195,6 +202,9 @@ class LayoutCustomersList extends StatelessWidget {
           ),
         ],
       ),
-    );
+    ):
+    Center(
+      child: Text("No User Found yet",style: TextStyle(fontSize: 20.sp,fontWeight: FontWeight.w600,fontFamily: "Nunito"),));
+
   }
 }

@@ -1,33 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
+import '../../constant/helpers.dart';
+import '../../models/message.dart';
 import '../../widgets/bubble_special_three.dart';
 
 class ItemChat extends StatelessWidget {
-  const ItemChat({Key? key}) : super(key: key);
+  Message message;
+  String displayDate;
 
+  ItemChat({
+    required this.message, required  this.displayDate,
+  });
   @override
   Widget build(BuildContext context) {
-    return  Column(
-      children: [
-        BubbleSpecialThree(
-          text: "How are you dear",
-          tail: false,//message.sender_id == uid ?true:false,
-          sent: false,//message.sender_id == uid ?true:false,
-          isSender:false,
-          seen: false,
-          delivered: false,
-          time: "17/03/2024 10:11 AM",
-        ),
-        BubbleSpecialThree(
-          text: "Im fine dear i hope you will be fine",
-          tail: false,//message.sender_id == uid ?true:false,
-          sent: false,//message.sender_id == uid ?true:false,
-          isSender:true,
-          seen: false,
-          delivered: false,
-          time: "17/03/2024 12:11 AM",
-        ),
-      ],
+    DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(message.timestamp);
+    String formattedDateTime = DateFormat('hh:mm a').format(dateTime);
+    return     BubbleSpecialThree(
+      text: message.text,
+      tail: false,//message.sender_id == uid ?true:false,
+      sent: false,//message.sender_id == uid ?true:false,
+      isSender: message.sender_id !=uid?false:true,
+      seen: false,
+      delivered: false,
+      time: formattedDateTime,
     );
   }
 }

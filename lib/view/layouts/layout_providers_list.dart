@@ -1,3 +1,4 @@
+import 'package:careno_admin/constant/helpers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,14 +6,17 @@ import 'package:get/get.dart';
 
 import '../../constant/CustomDialog.dart';
 import '../../constant/colors.dart';
+import '../../controllers/home_controller.dart';
 import '../../widgets/custom_button.dart';
 import '../screens/screen_chat.dart';
 import '../screens/screen_user_details.dart';
 class LayoutProvidersList extends StatelessWidget {
+  HomeController controller = Get.put(HomeController());
+
   List<String> list=["Block User"];
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return  controller.host.value.isNotEmpty? Container(
       padding: EdgeInsets.symmetric(horizontal: 30.w),
       color: AppColors.backGroundColor,
       child: Column(
@@ -89,22 +93,25 @@ class LayoutProvidersList extends StatelessWidget {
                                   ).paddingSymmetric(horizontal: 20.w)),
 
                             ],
-                            rows: List.generate(20, (index) {
+                            rows: List.generate(controller.host.value.length, (index) {
+                              var host = controller.host.value[index];
                               return DataRow(cells: [
                                 DataCell(
                                   CircleAvatar(
                                       radius: 45.r,
-                                      backgroundImage: AssetImage(
-                                          "assets/images/car.png"))
+                                      backgroundImage:NetworkImage(host.imageUrl.isEmpty?image_url:host.imageUrl)
+                                      // AssetImage(
+                                      //     "assets/images/car.png")
+                                  )
                                       .paddingSymmetric(horizontal: 20.w),
                                 ),
-                                DataCell(Text("Name")
+                                DataCell(Text(host.name)
                                     .paddingSymmetric(horizontal: 20.w)),
-                                DataCell(Text("+343434767676")
+                                DataCell(Text(host.phoneNumber)
                                     .paddingSymmetric(horizontal: 20.w)),
-                                DataCell(Text("ab@gmail.com")
+                                DataCell(Text(host.email)
                                     .paddingSymmetric(horizontal: 20.w)),
-                                DataCell(Text("Male").paddingSymmetric(horizontal: 20.w)),
+                                DataCell(Text(host.gender).paddingSymmetric(horizontal: 20.w)),
 
                                 DataCell(
                                   PopupMenuButton<String>(
@@ -154,14 +161,22 @@ class LayoutProvidersList extends StatelessWidget {
                                                           style: OutlinedButton.styleFrom(
                                                             backgroundColor: AppColors.appPrimaryColor,
                                                           ),
-                                                          onPressed: (){}, child: Text("Ok",style: TextStyle(
+                                                          onPressed: ()async{
+                                                            await usersRef.doc(host.uid).update({"isBlocked":true}).then((value) {
+                                                              Get.snackbar("Alert", "Successfully provider Update");
+                                                              Get.back();
+                                                            });
+
+                                                          }, child: Text("Ok",style: TextStyle(
                                                           color: Colors.white,
                                                           fontSize: 18.sp,
                                                           fontWeight: FontWeight.w500
                                                       ),)).marginOnly(right: 20.w
                                                       ),
 
-                                                      OutlinedButton(onPressed: (){}, child: Text("Cancel")),
+                                                      OutlinedButton(onPressed: (){
+                                                        Get.back();
+                                                      }, child: Text("Cancel")),
                                                     ]
                                                 ),
                                               ],
@@ -176,7 +191,7 @@ class LayoutProvidersList extends StatelessWidget {
                                   height: 45.h,
 
                                   title: 'View', onPressed: () {
-                                  Get.to(ScreenUserDetails(userType: 'host',));
+                                  Get.to(ScreenUserDetails(userType: 'host', user: host,));
                                 },).paddingSymmetric(horizontal: 20.w)),
 
                                 // DataCell(Text("Test")),
@@ -191,6 +206,8 @@ class LayoutProvidersList extends StatelessWidget {
           ),
         ],
       ),
-    );
+    ):    Center(
+        child: Text("No Provider Found yet",style: TextStyle(fontSize: 20.sp,fontWeight: FontWeight.w600,fontFamily: "Nunito"),));
+
   }
 }
