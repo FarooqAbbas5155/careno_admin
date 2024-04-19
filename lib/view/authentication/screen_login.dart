@@ -1,7 +1,7 @@
 import 'package:careno_admin/constant/colors.dart';
+import 'package:careno_admin/controllers/auth_controller.dart';
 import 'package:careno_admin/view/authentication/screen_forgot_password.dart';
-import 'package:careno_admin/view/screens/screen_dashboard.dart';
-import 'package:careno_admin/view/screens/screen_web_home_page.dart';
+import 'package:careno_admin/view/authentication/screen_sign_up.dart';
 import 'package:careno_admin/widgets/custom_button.dart';
 import 'package:careno_admin/widgets/custom_textfiled.dart';
 import 'package:flutter/cupertino.dart';
@@ -11,11 +11,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/get_utils/get_utils.dart';
-import 'package:careno_admin/view/screens/screen_add_categories.dart';
 
 class ScreenLogin extends StatelessWidget {
-  const ScreenLogin({Key? key}) : super(key: key);
-
+  AuthController authController = Get.put(AuthController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,6 +46,7 @@ class ScreenLogin extends StatelessWidget {
                         fontFamily: "Nunito"),
                   ).marginOnly(top: 60.h,bottom: 30.h),
                   CustomTextField(
+                    controller: authController.emailController.value,
                     hint: "Enter Email",
                     suffix: Padding(
                       padding:  EdgeInsets.only(top: 6.h),
@@ -57,6 +56,7 @@ class ScreenLogin extends StatelessWidget {
                     width: 534.w,
                   ),
                   CustomTextField(
+                    controller: authController.passwordController.value,
                     hint: "Password",
                     suffix: Padding(
                       padding:  EdgeInsets.only(top: 6.h),
@@ -87,11 +87,28 @@ class ScreenLogin extends StatelessWidget {
                       ),
                     ),
                   ),
-                  CustomButton(title: "Sign In", onPressed: (){
-                    Get.offAll(ScreenDashboard());
-                  }).marginSymmetric(vertical: 45.h)
-
-
+                  CustomButton(title: "Sign In", onPressed: ()async{
+                    var response=  await authController.LoginIn();
+                    // if (response == "success") {
+                    //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Login")));
+                    // }
+                    // else{
+                    //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(response.toString())));
+                    // print(response.toString());
+                    // }
+                  }).marginSymmetric(vertical: 30.h),
+                  GestureDetector(
+                      onTap: () async{
+                        Get.to(ScreenSignUp());
+                      },
+                      child: Text(
+                        "Don’t have account? Register",
+                        style: TextStyle(
+                            color: AppColors.appPrimaryColor,
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: "Urbanist"),
+                      )),
                 ],
               ),
             ),

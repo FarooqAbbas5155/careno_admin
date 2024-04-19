@@ -1,4 +1,5 @@
 import 'package:careno_admin/constant/colors.dart';
+import 'package:careno_admin/controllers/home_controller.dart';
 import 'package:careno_admin/view/screens/screeb_block_customer_list.dart';
 import 'package:careno_admin/view/screens/screen_block_provider_list.dart';
 import 'package:careno_admin/view/screens/table.dart';
@@ -9,8 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class LayoutDashboard extends StatelessWidget {
-  const LayoutDashboard({Key? key}) : super(key: key);
-
+HomeController controller = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,29 +31,29 @@ class LayoutDashboard extends StatelessWidget {
             runSpacing: 20,
 
             children: [
-              CustomContainer(Color(0xff0085cc), "50.k", "Total Categories",
+              CustomContainer(Color(0xff0085cc), controller.categories.value.length.toString(), "Total Categories",
                   "category.png", () {
                 Get.to(CustomTable());
                   }),
-              CustomContainer(Color(0xff27b097), "50.k", "Total Users",
+              CustomContainer(Color(0xff27b097), controller.user.value.length.toString(), "Total Users",
                   "user.png", () {}),
-              CustomContainer(Color(0xffff5252), "50.k", "Blocked Users",
+              CustomContainer(Color(0xffff5252), controller.Blockuser.value.length.toString(), "Blocked Users",
                   "block_user.png", () {
                 Get.to(ScreebBlockCustomerList());
                   }),
-              CustomContainer(Color(0xffafc23b), "50.k", "Total Providers",
+              CustomContainer(Color(0xffafc23b), controller.host.value.length.toString(), "Total Providers",
                   "provider.png", () {}),
-              CustomContainer(Color(0xff0a9bb0), "50.k", "Blocked Providers",
+              CustomContainer(Color(0xff0a9bb0), controller.Blockhost.value.length.toString(), "Blocked Providers",
                   "block_provider.png", () {
                 Get.to(ScreenBlockProviderList());
                   }),
-              CustomContainer(Color(0xff7f3bc2), "50.k", "Providers Requests",
+              CustomContainer(Color(0xff7f3bc2), controller.hostRequest.value.length.toString(), "Providers Requests",
                   "provider_request.png", () {
                 // Get.to(Screen)
                   }),
-              CustomContainer(Color(0xff3f51b5), "50.k", "Vehicles Requests",
+              CustomContainer(Color(0xff3f51b5), controller.vehiclesRequest.value.length.toString(), "Vehicles Requests",
                   "vehicle_request.png", () {}),
-              CustomContainer(AppColors.appPrimaryColor.withOpacity(.8), "50.k", "Messages",
+              CustomContainer(AppColors.appPrimaryColor.withOpacity(.8),  controller.message.value.length.toString().isEmpty?"0":controller.message.value.length.toString(), "Messages",
                   "message.png", () {}),
             ],
           ),
