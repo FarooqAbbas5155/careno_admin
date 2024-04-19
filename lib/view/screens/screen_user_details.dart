@@ -1,3 +1,4 @@
+import 'package:careno_admin/view/layouts/layout_active_booking.dart';
 import 'package:careno_admin/view/screens/screen_chat.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,7 +17,7 @@ String userType;
       appBar: AppBar(
 
       ),
-      body: buildDetails(),
+      body: Center(child:buildDetails(),)
     );
   }
 
@@ -28,6 +29,7 @@ ScreenUserDetails({
 
 Widget buildDetails() {
   return Container(
+    width: 800.w,
     padding: EdgeInsets.only(left: 30.w,bottom: 30,top: 30,right: 50),
     decoration: BoxDecoration(
       color: Colors.white,
@@ -173,6 +175,20 @@ Widget buildDetails() {
           textAlign: TextAlign.start,
         ).marginSymmetric(vertical: 8.h),
         Row(children: [
+         if(userType == "host") Expanded(child: CustomButton(
+            height: 46.h,
+            textStyle: TextStyle(
+                color: Colors.white,
+                fontSize: 15.sp,
+                fontWeight: FontWeight.w700
+            ),
+            title: "Vehicles" ,onPressed: (){
+              if (userType == "host") {
+                Get.to(LayoutActiveVehicles(userType:userType));
+              }
+
+
+          },color: Color(0xFFFE0000),).marginOnly(right: 20)),
           Expanded(child: CustomButton(
             height: 46.h,
             textStyle: TextStyle(
@@ -180,13 +196,9 @@ Widget buildDetails() {
                 fontSize: 15.sp,
                 fontWeight: FontWeight.w700
             ),
-            title:userType == "host"? "Vehicles":"Booking Details", onPressed: (){
-              if (userType == "host") {
-                Get.to(LayoutActiveVehicles());
-              }
-              else{
-                Get.to(LayoutCustomerBooking());
-              }
+            title:"Booking Details", onPressed: (){
+            Get.to(LayoutCustomerBooking());
+
 
           },color: Color(0xFFFE0000),)),
           SizedBox(width: 20.w,), Expanded(child

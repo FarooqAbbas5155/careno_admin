@@ -7,8 +7,7 @@ import '../../widgets/custom_button.dart';
 import '../screens/screen_vehicle_details.dart';
 
 class LayoutActiveVehicles extends StatelessWidget {
-  const LayoutActiveVehicles({Key? key}) : super(key: key);
-
+ String? userType;
   @override
   Widget build(BuildContext context) {
          return Scaffold(
@@ -105,6 +104,7 @@ class LayoutActiveVehicles extends StatelessWidget {
                                     CustomButton(
                                       title: "View",
                                       onPressed: () {
+                                        Get.to(ScreenVehicleDetails(status: 'Active',userType:userType));
                                       },
                                       height: 41.h,
                                       width: 100.w,
@@ -131,4 +131,8 @@ class LayoutActiveVehicles extends StatelessWidget {
          );
 
   }
+
+ LayoutActiveVehicles({
+    this.userType,
+  });
 }

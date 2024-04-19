@@ -106,7 +106,7 @@ class LayoutVehiclesRequests extends StatelessWidget {
                                       CustomButton(
                                         title: "View",
                                         onPressed: () {
-                                          Get.to(ScreenVehicleDetails());
+                                          Get.to(ScreenVehicleDetails(status: 'Pending',));
                                         },
                                         height: 41.h,
                                         width: 100.w,

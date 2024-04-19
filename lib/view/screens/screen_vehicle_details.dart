@@ -5,14 +5,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class ScreenVehicleDetails extends StatelessWidget {
-  const ScreenVehicleDetails({Key? key}) : super(key: key);
-
+ String status;
+ String? userType;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            "Provider Details",
+            "Vehicle Details",
             style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.w700,
@@ -277,7 +277,7 @@ class ScreenVehicleDetails extends StatelessWidget {
                       color: Color(0xFF828282)),
                   textAlign: TextAlign.start,
                 ).marginSymmetric(vertical: 8.h),
-                Row(
+               if(status=="Pending") Row(
                   children: [
                     Expanded(
                         child: CustomButton(
@@ -309,7 +309,7 @@ class ScreenVehicleDetails extends StatelessWidget {
               ],
             ),
           ).marginOnly(bottom: 10.h),
-          Container(
+          if(userType==""||userType==null)Container(
 
             color: Colors.white,
             child: ExpansionTile(
@@ -554,4 +554,9 @@ class ScreenVehicleDetails extends StatelessWidget {
       )),
     );
   }
+
+ ScreenVehicleDetails({
+    required this.status,
+    this.userType,
+  });
 }
