@@ -1,3 +1,4 @@
+import 'package:careno_admin/controllers/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -8,10 +9,11 @@ import '../screens/screen_vehicle_details.dart';
 
 class LayoutActiveVehicles extends StatelessWidget {
  String? userType;
+ HomeController controller = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
          return Scaffold(
-           body: Container(
+           body:controller.activeVehicle.value.isNotEmpty? Container(
                  padding: EdgeInsets.symmetric(horizontal: 30.w),
                  color: AppColors.backGroundColor,
                  child: Column(
@@ -83,7 +85,8 @@ class LayoutActiveVehicles extends StatelessWidget {
                                       style: TextStyle(color: Colors.white),
                                     ).paddingSymmetric(horizontal: 20.w)),
                               ],
-                              rows: List.generate(20, (index) {
+                              rows: List.generate(controller.activeVehicle.value.length, (index) {
+                                var vehicle = controller.activeVehicle.value[index];
                                 return DataRow(cells: [
                                   DataCell(
                                     CircleAvatar(
@@ -104,7 +107,7 @@ class LayoutActiveVehicles extends StatelessWidget {
                                     CustomButton(
                                       title: "View",
                                       onPressed: () {
-                                        Get.to(ScreenVehicleDetails(status: 'Active',userType:userType));
+                                        Get.to(ScreenVehicleDetails(status: 'Active',userType:userType,));
                                       },
                                       height: 41.h,
                                       width: 100.w,
@@ -114,7 +117,7 @@ class LayoutActiveVehicles extends StatelessWidget {
                                           fontWeight: FontWeight.w500),
                                     ),
                                   )
-           
+
                                   // DataCell(Text("Test")),
                                 ]);
                               })),
@@ -127,7 +130,8 @@ class LayoutActiveVehicles extends StatelessWidget {
             ),
                    ],
                  ),
-               ),
+               ):    Center(
+               child: Text("No User Found yet",style: TextStyle(fontSize: 20.sp,fontWeight: FontWeight.w600,fontFamily: "Nunito"),)),
          );
 
   }
