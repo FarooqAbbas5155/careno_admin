@@ -38,7 +38,7 @@ class LayoutCustomersList extends StatelessWidget {
                 color: Colors.white,
               ),
               child: Align(
-                alignment: Alignment.centerLeft,
+                alignment: Alignment.topLeft,
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: SingleChildScrollView(

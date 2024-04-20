@@ -32,7 +32,7 @@ class LayoutPromotionalBanner extends StatelessWidget {
             child:
 
             Align(
-              alignment: Alignment.centerLeft,
+              alignment: Alignment.topLeft,
               child: TextButton.icon(
                 style: ButtonStyle(
                   backgroundColor: MaterialStateColor.resolveWith((states) => AppColors.appPrimaryColor),

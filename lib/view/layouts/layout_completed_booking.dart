@@ -1,16 +1,22 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../constant/colors.dart';
+import '../../constant/helpers.dart';
+import '../../models/add_host_vehicle.dart';
+import '../../models/booking.dart';
 import '../../widgets/custom_button.dart';
 import '../screens/screen_vehicle_booked_details.dart';
 
 class LayoutCompletedBooking extends StatelessWidget {
-  const LayoutCompletedBooking({Key? key}) : super(key: key);
+List<Booking> completedBooking;
+Rx<AddHostVehicle?> vehicle = Rx<AddHostVehicle?>(null);
 
   @override
   Widget build(BuildContext context) {
+    completedBooking=completedBooking.where((element) => element.bookingStatus=="Completed").toList();
     return Container(
       padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 20.w),
       margin: EdgeInsets.symmetric(
@@ -20,7 +26,7 @@ class LayoutCompletedBooking extends StatelessWidget {
         color: Colors.white,
       ),
       child: Align(
-        alignment: Alignment.centerLeft,
+        alignment: Alignment.topLeft,
         child: SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: SingleChildScrollView(
@@ -77,31 +83,50 @@ class LayoutCompletedBooking extends StatelessWidget {
                             style: TextStyle(color: Colors.white),
                           ).paddingSymmetric(horizontal: 20.w)),
                     ],
-                    rows: List.generate(20, (index) {
+                    rows: List.generate(completedBooking.length, (index) {
+                      var booking = completedBooking[index];
                       return DataRow(cells: [
                         DataCell(
-                          CircleAvatar(
-                              radius: 45.r,
-                              backgroundImage: AssetImage(
-                                  "assets/images/car.png"))
-                              .paddingSymmetric(horizontal: 20.w),
+                          StreamBuilder<DocumentSnapshot>(
+                              stream: addVehicleRef
+                                  .doc(booking.vehicleId)
+                                  .snapshots(),
+                              builder: (BuildContext context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                }
+                                vehicle.value = AddHostVehicle.fromMap(
+                                    snapshot.data!.data()
+                                    as Map<String, dynamic>);
+                                return Obx(() {
+                                  return (vehicle.value==null)?Text("Loading"):CircleAvatar(
+                                      radius: 45.r,
+                                      backgroundImage:
+                                      NetworkImage(
+                                          vehicle.value!.vehicleImageComplete));
+                                })
+                                    .paddingSymmetric(horizontal: 20.w);
+                              }),
                         ),
-                        DataCell(Text("Tesla Model 3")
+                        DataCell((vehicle.value==null)?Text("Loading"):Text(vehicle.value!.vehicleModel)
                             .paddingSymmetric(horizontal: 20.w)),
-                        DataCell(Text("Street 2, House No, City, New York, United State")
-                            .paddingSymmetric(horizontal: 20.w)),
-                        DataCell(Text("Per day")
-                            .paddingSymmetric(horizontal: 20.w)),
-                        DataCell(Text("\$ 15")
-                            .paddingSymmetric(horizontal: 20.w)),
-                        DataCell(Text("Completed")
+                        DataCell((vehicle.value==null)?Text("Loading"):Text(
+                            vehicle.value!.address)
                             .paddingSymmetric(horizontal: 20.w)),
                         DataCell(
-                          CustomButton(
+                            Text(booking.bookingType).paddingSymmetric(horizontal: 20.w)),
+                        DataCell(
+                            Text("\$ ${booking.price}").paddingSymmetric(horizontal: 20.w)),
+                        DataCell(
+                            Text(booking.bookingStatus).paddingSymmetric(horizontal: 20.w)),
+                        DataCell(
+                          (vehicle.value==null)?Text("Loading"):CustomButton(
                             title: "View",
                             onPressed: () {
-                              Get.to(ScreenVehicleBookedDetails());
-
+                              Get.to(ScreenVehicleBookedDetails(booking: booking, vehicle: vehicle.value!,));
                             },
                             height: 41.h,
                             width: 100.w,
@@ -122,4 +147,8 @@ class LayoutCompletedBooking extends StatelessWidget {
       ),
     );
   }
+
+LayoutCompletedBooking({
+    required this.completedBooking,
+  });
 }

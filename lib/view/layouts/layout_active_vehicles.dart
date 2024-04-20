@@ -13,7 +13,7 @@ class LayoutActiveVehicles extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
          return Scaffold(
-           body:controller.activeVehicle.value.isNotEmpty? Container(
+           body:controller.vehiclesRequest.value.isNotEmpty? Container(
                  padding: EdgeInsets.symmetric(horizontal: 30.w),
                  color: AppColors.backGroundColor,
                  child: Column(
@@ -33,7 +33,7 @@ class LayoutActiveVehicles extends StatelessWidget {
                   color: Colors.white,
                 ),
                 child: Align(
-                  alignment: Alignment.centerLeft,
+                  alignment: Alignment.topLeft,
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: SingleChildScrollView(
@@ -85,29 +85,29 @@ class LayoutActiveVehicles extends StatelessWidget {
                                       style: TextStyle(color: Colors.white),
                                     ).paddingSymmetric(horizontal: 20.w)),
                               ],
-                              rows: List.generate(controller.activeVehicle.value.length, (index) {
-                                var vehicle = controller.activeVehicle.value[index];
+                              rows: List.generate(controller.vehiclesRequest.value.length, (index) {
+                                var vehicle = controller.vehiclesRequest.value[index];
                                 return DataRow(cells: [
                                   DataCell(
                                     CircleAvatar(
                                         radius: 45.r,
-                                        backgroundImage: AssetImage(
-                                            "assets/images/car.png"))
+                                        backgroundImage: NetworkImage(
+                                            vehicle.vehicleImageComplete))
                                         .paddingSymmetric(horizontal: 20.w),
                                   ),
-                                  DataCell(Text("Tesla Model 3")
+                                  DataCell(Text(vehicle.vehicleModel)
                                       .paddingSymmetric(horizontal: 20.w)),
-                                  DataCell(Text("Street 2, House No, City, New York, United State")
+                                  DataCell(Text(vehicle.address)
                                       .paddingSymmetric(horizontal: 20.w)),
-                                  DataCell(Text("\$ 150")
+                                  DataCell(Text("\$ ${vehicle.vehiclePerDayRent}")
                                       .paddingSymmetric(horizontal: 20.w)),
-                                  DataCell(Text("\$ 15")
+                                  DataCell(Text("\$ ${vehicle.vehiclePerHourRent}")
                                       .paddingSymmetric(horizontal: 20.w)),
                                   DataCell(
                                     CustomButton(
                                       title: "View",
                                       onPressed: () {
-                                        Get.to(ScreenVehicleDetails(status: 'Active',userType:userType,));
+                                        Get.to(ScreenVehicleDetails(status: 'Active',userType:userType,vehicle: vehicle,));
                                       },
                                       height: 41.h,
                                       width: 100.w,

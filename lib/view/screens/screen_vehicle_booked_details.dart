@@ -1,12 +1,14 @@
+import 'package:careno_admin/models/add_host_vehicle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../constant/colors.dart';
+import '../../models/booking.dart';
 
 class ScreenVehicleBookedDetails extends StatelessWidget {
-  const ScreenVehicleBookedDetails({Key? key}) : super(key: key);
-
+   Booking booking;
+  AddHostVehicle vehicle;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -428,4 +430,9 @@ class ScreenVehicleBookedDetails extends StatelessWidget {
           )),
     );
   }
+
+  ScreenVehicleBookedDetails({
+    required this.booking,
+    required this.vehicle,
+  });
 }

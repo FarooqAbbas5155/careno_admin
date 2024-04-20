@@ -10,8 +10,8 @@ import '../view/screens/screen_dashboard.dart';
 class AuthController extends GetxController {
 
   RxBool loading = false.obs;
-  Rx<TextEditingController> emailController = TextEditingController().obs;
-  Rx<TextEditingController> passwordController = TextEditingController().obs;
+  Rx<TextEditingController> emailController = TextEditingController(text:"careno@gmail.com").obs;
+  Rx<TextEditingController> passwordController = TextEditingController(text:"654321").obs;
 
   Future<String> SignUp() async {
     String response = "";

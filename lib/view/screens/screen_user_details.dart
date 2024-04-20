@@ -209,7 +209,7 @@ Widget buildDetails() {
                 fontWeight: FontWeight.w700
             ),
             title:"Booking Details", onPressed: (){
-            Get.to(LayoutCustomerBooking());
+            Get.to(LayoutCustomerBooking(user: user,));
 
 
           },color: Color(0xFFFE0000),)),

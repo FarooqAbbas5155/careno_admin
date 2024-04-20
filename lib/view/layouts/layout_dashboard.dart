@@ -34,47 +34,64 @@ class LayoutDashboard extends StatelessWidget {
 
               children: [
                 CustomContainer(Color(0xff0085cc),
-                    controller.categories.value.length.toString(),
+                    ("${controller.categories.value.length}").obs,
                     "Total Categories",
                     "category.png", () {
                       Get.to(CustomTable());
                     }),
-                CustomContainer(
-                    Color(0xff27b097), controller.user.value.length.toString(),
-                    "Total Users",
-                    "user.png", () {}),
-                CustomContainer(Color(0xffff5252),
-                    controller.Blockuser.value.length.toString(),
-                    "Blocked Users",
-                    "block_user.png", () {
-                      Get.to(ScreebBlockCustomerList());
-                    }),
-                CustomContainer(
-                    Color(0xffafc23b), controller.host.value.length.toString(),
-                    "Total Providers",
-                    "provider.png", () {}),
-                CustomContainer(Color(0xff0a9bb0),
-                    controller.Blockhost.value.length.toString(),
-                    "Blocked Providers",
-                    "block_provider.png", () {
-                      Get.to(ScreenBlockProviderList());
-                    }),
-                CustomContainer(Color(0xff7f3bc2),
-                    controller.hostRequest.value.length.toString(),
-                    "Providers Requests",
-                    "provider_request.png", () {
-                      // Get.to(Screen)
-                    }),
-                CustomContainer(Color(0xff3f51b5),
-                    controller.vehiclesRequest.value.length.toString(),
-                    "Vehicles Requests",
-                    "vehicle_request.png", () {}),
-                CustomContainer(AppColors.appPrimaryColor.withOpacity(.8),
-                    controller.message.value.length
-                        .toString()
-                        .isEmpty ? "0" : controller.message.value.length
-                        .toString(), "Messages",
-                    "message.png", () {}),
+                Obx(() {
+                  return CustomContainer(
+                      Color(0xff27b097),
+                      controller.user.value.length.toString().obs,
+                      "Total Users",
+                      "user.png", () {});
+                }),
+                Obx(() {
+                  return CustomContainer(Color(0xffff5252),
+                      controller.Blockuser.value.length.toString().obs,
+                      "Blocked Users",
+                      "block_user.png", () {
+                        Get.to(ScreebBlockCustomerList());
+                      });
+                }),
+                Obx(() {
+                  return CustomContainer(
+                      Color(0xffafc23b),
+                      controller.host.value.length.toString().obs,
+                      "Total Providers",
+                      "provider.png", () {});
+                }),
+                Obx(() {
+                  return CustomContainer(Color(0xff0a9bb0),
+                      controller.Blockhost.value.length.toString().obs,
+                      "Blocked Providers",
+                      "block_provider.png", () {
+                        Get.to(ScreenBlockProviderList());
+                      });
+                }),
+                Obx(() {
+                  return CustomContainer(Color(0xff7f3bc2),
+                      controller.hostRequest.value.length.toString().obs,
+                      "Providers Requests",
+                      "provider_request.png", () {
+                        // Get.to(Screen)
+                      });
+                }),
+                Obx(() {
+                  return CustomContainer(Color(0xff3f51b5),
+                      controller.vehiclesRequest.value.length.toString().obs,
+                      "Vehicles Requests",
+                      "vehicle_request.png", () {});
+                }),
+                Obx(() {
+                  return CustomContainer(
+                      AppColors.appPrimaryColor.withOpacity(.8),
+                      controller.message.value.length
+                          .toString()
+                          .isEmpty ? ("0").obs : controller.message.value.length
+                          .toString().obs, "Messages",
+                      "message.png", () {});
+                }),
               ],
             ),
           ],
@@ -84,7 +101,7 @@ class LayoutDashboard extends StatelessWidget {
   }
 }
 
-Widget CustomContainer(Color color, String itemLength, title, imagepath,
+Widget CustomContainer(Color color, RxString itemLength, title, imagepath,
     VoidCallback voidCallback) {
   return Container(
     height: 160.h,
@@ -99,14 +116,16 @@ Widget CustomContainer(Color color, String itemLength, title, imagepath,
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                itemLength,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: "Nunito",
-                    fontSize: 30.sp,
-                    fontWeight: FontWeight.w700),
-              ).marginOnly(top: 15.h),
+              Obx(() {
+                return Text(
+                  itemLength.value,
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: "Nunito",
+                      fontSize: 30.sp,
+                      fontWeight: FontWeight.w700),
+                );
+              }).marginOnly(top: 15.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

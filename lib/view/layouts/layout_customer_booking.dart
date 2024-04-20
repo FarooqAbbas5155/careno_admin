@@ -1,4 +1,10 @@
+import 'dart:developer';
+
+import 'package:careno_admin/constant/helpers.dart';
+import 'package:careno_admin/models/booking.dart';
+import 'package:careno_admin/models/user.dart';
 import 'package:careno_admin/view/layouts/layout_completed_booking.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -9,8 +15,7 @@ import '../screens/screen_vehicle_booked_details.dart';
 import 'layout_active_booking.dart';
 
 class LayoutCustomerBooking extends StatelessWidget {
-  const LayoutCustomerBooking({Key? key}) : super(key: key);
-
+ User user;
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -33,11 +38,33 @@ class LayoutCustomerBooking extends StatelessWidget {
            Tab(text: "Active Booking",),
            Tab(text: "Completed Booking",),
          ]),
-              Expanded(child: TabBarView(
-                children: [
-                  LayoutActiveBooking(),
-                  LayoutCompletedBooking(),
-                ],
+              Expanded(child: StreamBuilder<QuerySnapshot>(
+                stream: bookingsRef.snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState==ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator(),);
+
+                  }
+                  var bookings=snapshot.data!.docs.map((e) => Booking.fromMap(e.data() as Map<String,dynamic>)).toList();
+                  log("main${bookings.first.userId.toString()}");
+                  log("main${bookings.first.hostId.toString()}");
+                  log("main${user.uid.toString()}")
+;                  if (user.userType=="host") {
+                    bookings=bookings.where((element) => element.hostId==user.uid).toList();
+                    log(bookings.toString());
+                  }
+                  if (user.userType=="user") {
+                    bookings=bookings.where((element) => element.userId==user.uid).toList();
+                    log(bookings.toString());
+
+                  }
+                  return TabBarView(
+                    children: [
+                      LayoutActiveBooking(activeBooking: bookings,),
+                      LayoutCompletedBooking(completedBooking: bookings,),
+                    ],
+                  );
+                }
               )),
             ],
           ),
@@ -45,4 +72,8 @@ class LayoutCustomerBooking extends StatelessWidget {
       ),
     );
   }
+
+ LayoutCustomerBooking({
+    required this.user,
+  });
 }
