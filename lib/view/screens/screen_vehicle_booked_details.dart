@@ -1,7 +1,12 @@
+import 'package:careno_admin/constant/helpers.dart';
 import 'package:careno_admin/models/add_host_vehicle.dart';
+import 'package:careno_admin/models/categories.dart';
+import 'package:careno_admin/models/user.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../constant/colors.dart';
 import '../../models/booking.dart';
@@ -9,7 +14,11 @@ import '../../models/booking.dart';
 class ScreenVehicleBookedDetails extends StatelessWidget {
    Booking booking;
   AddHostVehicle vehicle;
+
   @override
+
+  var user;
+   var category;
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -22,36 +31,61 @@ class ScreenVehicleBookedDetails extends StatelessWidget {
                 fontFamily: "Quicksand"),
           ),
         ),
-        body: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) {
-            if (constraints.maxWidth > 800) {
-              return Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(flex: 1, child: buildDetails()),
-                  SizedBox(
-                    width: 2,
-                  ),
-                  Expanded(flex: 1, child: buildDocumnets()),
-                ],
-              ).marginSymmetric(horizontal: 50.w, vertical: 20);
-            } else {
-              return SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    buildDetails(),
-                    SizedBox(height: 10,),
-                    buildDocumnets(),
-                  ],
-                ).marginSymmetric(horizontal: 50.w, vertical: 20),
+        body: FutureBuilder<DocumentSnapshot>(
+          future: usersRef.doc(vehicle.hostId).get(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator.adaptive(backgroundColor: AppColors.appPrimaryColor,),
               );
+
             }
-          },
+            user = User.fromMap(snapshot.data!.data() as Map<String,dynamic>);
+            return FutureBuilder<DocumentSnapshot>(
+              future: categoryRef.doc(vehicle.vehicleCategory).get(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator.adaptive(backgroundColor: AppColors.appPrimaryColor,),
+                  );
+
+                }
+                category = Category.fromMap(snapshot.data!.data() as Map<String,dynamic>);
+                return LayoutBuilder(
+                  builder: (BuildContext context, BoxConstraints constraints) {
+                    if (constraints.maxWidth > 800) {
+                      return Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(flex: 1, child: buildDetails()),
+                          SizedBox(
+                            width: 2,
+                          ),
+                          Expanded(flex: 1, child: buildDocumnets()),
+                        ],
+                      ).marginSymmetric(horizontal: 50.w, vertical: 20);
+                    } else {
+                      return SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            buildDetails(),
+                            SizedBox(height: 10,),
+                            buildDocumnets(),
+                          ],
+                        ).marginSymmetric(horizontal: 50.w, vertical: 20),
+                      );
+                    }
+                  },
+                );
+              }
+            );
+          }
         ));
   }
 
   Widget buildDetails() {
+
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -74,15 +108,14 @@ class ScreenVehicleBookedDetails extends StatelessWidget {
                       fontWeight: FontWeight.w700,
                       color: Colors.black),
                 ),
-                Text(
-                  "Kristin Watson",
-                  style: TextStyle(
+                Text(user!.name,
+                 style: TextStyle(
                       fontWeight: FontWeight.w700,
                       fontSize: 18.sp,
                       color: Colors.black),
                 ),
                 Text(
-                  "Street 2, House No, City, New York, United State",
+                  vehicle.address.isNotEmpty?vehicle.address:"No address found",
                   style: TextStyle(
                       fontSize: 11.sp,
                       color: AppColors.appPrimaryColor,
@@ -101,7 +134,7 @@ class ScreenVehicleBookedDetails extends StatelessWidget {
                                   color: AppColors.greyHeadingTextColor),
                               children: [
                                 TextSpan(
-                                    text: " 2020",
+                                    text: " ${vehicle.vehicleYear}",
                                     style: TextStyle(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 14.sp,
@@ -118,7 +151,7 @@ class ScreenVehicleBookedDetails extends StatelessWidget {
                                   color: AppColors.greyHeadingTextColor),
                               children: [
                                 TextSpan(
-                                    text: "Sedan",
+                                    text: "${category.name}",
                                     style: TextStyle(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 14.sp,
@@ -139,7 +172,7 @@ class ScreenVehicleBookedDetails extends StatelessWidget {
                                   color: AppColors.greyHeadingTextColor),
                               children: [
                                 TextSpan(
-                                    text: " Black",
+                                    text: " ${vehicle.vehicleColor}",
                                     style: TextStyle(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 14.sp,
@@ -156,7 +189,7 @@ class ScreenVehicleBookedDetails extends StatelessWidget {
                                   color: AppColors.greyHeadingTextColor),
                               children: [
                                 TextSpan(
-                                    text: " 05",
+                                    text: " ${vehicle.vehicleSeats}",
                                     style: TextStyle(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 14.sp,
@@ -177,7 +210,7 @@ class ScreenVehicleBookedDetails extends StatelessWidget {
                                   color: AppColors.greyHeadingTextColor),
                               children: [
                                 TextSpan(
-                                    text: "  Automatic",
+                                    text: "  ${vehicle.vehicleTransmission}",
                                     style: TextStyle(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 14.sp,
@@ -194,7 +227,7 @@ class ScreenVehicleBookedDetails extends StatelessWidget {
                                   color: AppColors.greyHeadingTextColor),
                               children: [
                                 TextSpan(
-                                    text: " Gasoline",
+                                    text: " ${vehicle.vehicleFuelType}",
                                     style: TextStyle(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 14.sp,
@@ -215,7 +248,7 @@ class ScreenVehicleBookedDetails extends StatelessWidget {
                                   color: AppColors.greyHeadingTextColor),
                               children: [
                                 TextSpan(
-                                    text: "  10:10 PM",
+                                    text: "  ${formatTime(booking.startTime)}",
                                     style: TextStyle(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 14.sp,
@@ -232,7 +265,7 @@ class ScreenVehicleBookedDetails extends StatelessWidget {
                                   color: AppColors.greyHeadingTextColor),
                               children: [
                                 TextSpan(
-                                    text: " 11:10 PM",
+                                    text: " ${formatTime(booking.EndTime)}",
                                     style: TextStyle(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 14.sp,
@@ -253,11 +286,13 @@ class ScreenVehicleBookedDetails extends StatelessWidget {
                                   color: AppColors.greyHeadingTextColor),
                               children: [
                                 TextSpan(
-                                    text: "  14/03/2024",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 14.sp,
-                                        color: AppColors.greyTextColor))
+                                  text: "  ${BookingDateFormate(booking.bookingStartDate)}",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 14.sp,
+                                    color: AppColors.greyTextColor,
+                                  ),
+                                )
                               ])),
                     ),
                     Expanded(
@@ -270,7 +305,7 @@ class ScreenVehicleBookedDetails extends StatelessWidget {
                                   color: AppColors.greyHeadingTextColor),
                               children: [
                                 TextSpan(
-                                    text: " 17/03/2024",
+                                    text: " ${BookingDateFormate(booking.bookingEndDate)}",
                                     style: TextStyle(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 14.sp,
@@ -289,7 +324,7 @@ class ScreenVehicleBookedDetails extends StatelessWidget {
                             color: AppColors.greyHeadingTextColor),
                         children: [
                           TextSpan(
-                              text: "  10-SY-118",
+                              text: "  ${vehicle.vehicleNumberPlate}",
                               style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 14.sp,
@@ -307,7 +342,7 @@ class ScreenVehicleBookedDetails extends StatelessWidget {
                                   color: AppColors.greyHeadingTextColor),
                               children: [
                                 TextSpan(
-                                    text: "  Per day",
+                                    text: "  ${booking.bookingType}",
                                     style: TextStyle(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 14.sp,
@@ -324,7 +359,7 @@ class ScreenVehicleBookedDetails extends StatelessWidget {
                                   color: AppColors.greyHeadingTextColor),
                               children: [
                                 TextSpan(
-                                    text: " \$ 15",
+                                    text: " \$ ${booking.price}",
                                     style: TextStyle(
                                         fontWeight: FontWeight.w600,
                                         fontSize: 14.sp,
@@ -334,7 +369,7 @@ class ScreenVehicleBookedDetails extends StatelessWidget {
                   ],
                 ).marginSymmetric(vertical: 10.h),
                 Text(
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+                  vehicle.vehicleDescription,
                   style: TextStyle(
                       fontSize: 11.sp,
                       fontWeight: FontWeight.w500,
@@ -375,7 +410,9 @@ class ScreenVehicleBookedDetails extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.r),
                       image: DecorationImage(
-                          image: AssetImage("assets/images/car_fornt.png")),
+                          image:NetworkImage(vehicle.vehicleImageComplete)
+                          // AssetImage("assets/images/car_fornt.png")
+                      ),
                     ),
                   ),
                   Container(
@@ -384,7 +421,9 @@ class ScreenVehicleBookedDetails extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.r),
                       image: DecorationImage(
-                          image: AssetImage("assets/images/full_car.png")),
+                          image: NetworkImage(vehicle.vehicleImageInterior)
+                          // AssetImage("assets/images/full_car.png")
+                      ),
                     ),
                   ),
                   Container(
@@ -393,7 +432,9 @@ class ScreenVehicleBookedDetails extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.r),
                       image: DecorationImage(
-                          image: AssetImage("assets/images/car_fornt.png")),
+                          image: NetworkImage(vehicle.vehicleImageRightSide)
+                          // AssetImage("assets/images/car_fornt.png")
+                      ),
                     ),
                   ),
                   Container(
@@ -402,7 +443,9 @@ class ScreenVehicleBookedDetails extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.r),
                       image: DecorationImage(
-                          image: AssetImage("assets/images/full_car.png")),
+                          image: NetworkImage(vehicle.vehicleImageNumberPlate)
+                          // AssetImage("assets/images/full_car.png")
+                      ),
                     ),
                   ),
                   Container(
@@ -411,7 +454,9 @@ class ScreenVehicleBookedDetails extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.r),
                       image: DecorationImage(
-                          image: AssetImage("assets/images/car_fornt.png")),
+                          image: NetworkImage(vehicle.vehicleImageRear)
+                          // AssetImage("assets/images/car_fornt.png")
+                      ),
                     ),
                   ),
                   Container(
@@ -420,7 +465,9 @@ class ScreenVehicleBookedDetails extends StatelessWidget {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.r),
                       image: DecorationImage(
-                          image: AssetImage("assets/images/full_car.png")),
+                          image: NetworkImage(vehicle.vehicleRegistrationImage)
+                          // AssetImage("assets/images/full_car.png")
+                      ),
                     ),
                   ),
                 ],

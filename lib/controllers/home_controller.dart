@@ -2,6 +2,7 @@ import 'package:careno_admin/constant/helpers.dart';
 import 'package:careno_admin/models/add_host_vehicle.dart';
 import 'package:careno_admin/models/booking.dart';
 import 'package:careno_admin/models/categories.dart';
+import 'package:careno_admin/models/last_message.dart';
 import 'package:careno_admin/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
@@ -15,7 +16,7 @@ class HomeController extends GetxController{
 
 
 RxList<User> user = RxList<User>([]);
-RxList<User> message = RxList<User>([]);
+RxList<LastMessage> message = RxList<LastMessage>([]);
 RxList<User> Blockuser = RxList<User>([]);
 RxList<User> host = RxList<User>([]);
 RxList<User> Blockhost = RxList<User>([]);
@@ -50,7 +51,7 @@ void onInit(){
   categorySnapshot = categoryRef.snapshots();
   categories.bindStream(categorySnapshot!.map((event) => event.docs.map((e) => Category.fromMap(e.data() as Map<String,dynamic>)).toList()));
   messageSnapshot =  usersRef.doc(uid).collection("chats").snapshots();
-  message.bindStream(messageSnapshot!.map((event) => event.docs.map((e) => User.fromMap(e.data() as Map<String,dynamic>)).toList()));
+  message.bindStream(messageSnapshot!.map((event) => event.docs.map((e) => LastMessage.fromMap(e.data() as Map<String,dynamic>)).toList()));
   ActiveVehicleSnapshot = bookingsRef.where("bookingStatus", whereIn: ["In progress", "Pending Approval"]).snapshots();
   activeVehicle.bindStream(ActiveVehicleSnapshot!.map((event) => event.docs.map((e) => Booking.fromMap(e.data() as Map<String,dynamic>)).toList()));
   super.onInit();

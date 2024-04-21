@@ -70,3 +70,19 @@ String dateFormat(DateTime dateTime,) {
 String get2ndUserId(String chatRoomId, String myId){
   return chatRoomId.replaceAll(myId, "").replaceAll("_", "").trim();
 }
+String BookingDateFormate(int dateTime){
+  DateTime dobDateTime = DateTime.fromMillisecondsSinceEpoch(dateTime);
+  String formattedDate = DateFormat('dd/MM/yyyy ').format(dobDateTime);
+  return formattedDate;
+}
+String formatTime(int hour24) {
+
+  // Create a DateTime object with the given hour in 24-hour format
+  DateTime dateTime = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day, hour24);
+
+  // Format the DateTime object using DateFormat to convert to 12-hour format with AM/PM
+  DateFormat dateFormat = DateFormat('h:mm a'); // 'h:mm a' for 12-hour format with AM/PM
+  String formattedTime = dateFormat.format(dateTime);
+
+  return formattedTime;
+}
