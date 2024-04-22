@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-
 import '../../constant/helpers.dart';
-import '../../controllers/chat_controller.dart';
 import '../../models/user.dart';
 import '../screens/screen_chat.dart';
 
@@ -28,23 +26,18 @@ class ItemLayoutMessage extends StatelessWidget {
         children: [
           Row(
             children: <Widget>[
-              GestureDetector(
-                onTap: (){
-                  // showPopupImage(context, user.imageUrl);
-                },
-                child: Container(
-                  height: 60.h,
-                  width: 60.w,
-                  decoration: BoxDecoration(
-                    color: AppColors.appPrimaryColor,
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                          image:   NetworkImage(user.imageUrl.isEmpty
-                              ? image_url
-                              : user.imageUrl),
-                          // AssetImage("assets/images/profile.png"),
-                          fit: BoxFit.fill)
-                  ),
+              Container(
+                height: 60.h,
+                width: 60.w,
+                decoration: BoxDecoration(
+                  color: AppColors.appPrimaryColor,
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                        image:   NetworkImage(user.imageUrl.isEmpty
+                            ? image_url
+                            : user.imageUrl),
+                        // AssetImage("assets/images/profile.png"),
+                        fit: BoxFit.fill)
                 ),
               ),
               Expanded(
@@ -87,8 +80,7 @@ class ItemLayoutMessage extends StatelessWidget {
                 ],),
 
             ],
-          ).marginSymmetric(horizontal: 25.w
-              ,vertical: 5.h),
+          ).marginSymmetric(horizontal: 25.w,vertical: 5.h),
           Divider(
             indent: 80.w,
             endIndent: 14,
@@ -97,7 +89,6 @@ class ItemLayoutMessage extends StatelessWidget {
       ).marginSymmetric(vertical: 5.h),
     );
   }
-
   ItemLayoutMessage({
     required this.user,
     required this.lastMessage,

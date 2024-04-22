@@ -135,7 +135,6 @@ class _ScreenChatState extends State<ScreenChat> {
   //
   //   return mySnapshot.exists;
   // }
-
   Future<void> clearCounter() async {
     try {
       DocumentReference chatRef = usersRef
@@ -171,10 +170,7 @@ class _ScreenChatState extends State<ScreenChat> {
       print("Error clearing chat: $error");
     });
   }
-
-
-
-  @override
+ @override
   Widget build(BuildContext context) {
     DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(widget.user!.timeStamp);
     String formattedDateTime = DateFormat('hh:mm a').format(dateTime);
@@ -222,44 +218,37 @@ class _ScreenChatState extends State<ScreenChat> {
       body: Column(
         children: [
           Expanded(
-            child: SingleChildScrollView(
-              child:StreamBuilder<DatabaseEvent>(
-                stream: stream,
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData || snapshot.data == null) {
-                    return Center(
-                      child: Column(
-                        children: [
-                          CircularProgressIndicator.adaptive(
-                            backgroundColor: AppColors.appPrimaryColor,
-                            strokeWidth: 1,
-                          ),
-                        ],
-                      ),
-                    );
-                  }
-
-                  var data = snapshot.data!.snapshot.value;
-                  if (data == null) {
-                    return Center(
-                      child: Column(
-                        children: [
-                          Text(
-                             "No Messages",style: TextStyle(color: AppColors.appPrimaryColor),),
-                        ],
-                      ),
-                    );
-                  }
-                  clearCounter();
-                  List<Message> messages = snapshot.data!.snapshot.children
-                      .map((e) => Message.fromMap(
-                    Map<String, dynamic>.from(e.value as dynamic),
-                  ))
-                      .toList();
-                  messages.sort((b, a) => a.timestamp.compareTo(b.timestamp));
-                  return (messages.isNotEmpty)
-                      ? Builder(
-                    builder: (context) {
+            child: StreamBuilder<DatabaseEvent>(
+              stream: stream,
+              builder: (context, snapshot) {
+                if (!snapshot.hasData || snapshot.data == null) {
+                  return Center(
+                    child: CircularProgressIndicator.adaptive(
+                      backgroundColor: AppColors.appPrimaryColor,
+                      strokeWidth: 1,
+                    ),
+                  );
+                }
+                var data = snapshot.data!.snapshot.value;
+                if (data == null) {
+                  return Center(
+                    child: Column(
+                      children: [
+                        Text(
+                           "No Messages",style: TextStyle(color: AppColors.appPrimaryColor),),
+                      ],
+                    ),
+                  );
+                }
+                clearCounter();
+                List<Message> messages = snapshot.data!.snapshot.children.map((e) => Message.fromMap(
+                  Map<String, dynamic>.from(e.value as dynamic),
+                )).toList();
+                messages.sort((b, a) => a.timestamp.compareTo(b.timestamp));
+                return (messages.isNotEmpty)
+                    ? SingleChildScrollView(
+                      child: Builder(
+                                        builder: (context) {
                       // Group messages by date
                       Map<String, List<Message>> groupedMessages =
                       groupMessagesByDate(messages);
@@ -317,23 +306,16 @@ class _ScreenChatState extends State<ScreenChat> {
                         },
                       );
 
-                    },
-                  )
-                      : Center(
-                    child: Text(
-                      "No Messages",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  );
-                },
-              ),
-              //
-              // Column(
-              //   children: List.generate(
-              //     18,
-              //         (index) => ItemChat(), // Replace with your chat item widget
-              //   ),
-              // ),
+                                        },
+                                      ),
+                    )
+                    : Center(
+                  child: Text(
+                    "No Messages",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                );
+              },
             ),
           ),
           Container(
