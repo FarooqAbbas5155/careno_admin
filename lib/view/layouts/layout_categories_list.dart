@@ -50,66 +50,67 @@ class LayoutCategoriesList extends StatelessWidget {
               ),
             ),
           ),
-      controller.categories.value.isNotEmpty? Expanded(
-            child: Container(
-              padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 20.w),
-              margin: EdgeInsets.symmetric(vertical: 15.h,),
-              decoration: BoxDecoration(
-                color: Colors.white,
-              ),
-              child: Align(
-                alignment: Alignment.topLeft,
+      Obx(() {
+        return controller.categories.value.isNotEmpty? Expanded(
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 20.w),
+            margin: EdgeInsets.symmetric(vertical: 15.h,),
+            decoration: BoxDecoration(
+              color: Colors.white,
+            ),
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
                 child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: Column(
-                      children: [
-                         DataTable(
-                           columnSpacing: 40.h,
-                             decoration: BoxDecoration(
-                               border: Border.all(color: Colors.grey), // Border for the entire DataTable
-                             ),
-                           headingRowHeight: 60.h,
-                           // horizontalMargin: 100.w,
-                           dataRowHeight: 120.h,
-                              headingRowColor: MaterialStateProperty.resolveWith(
+                  scrollDirection: Axis.vertical,
+                  child: Column(
+                    children: [
+                      DataTable(
+                          columnSpacing: 40.h,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey), // Border for the entire DataTable
+                          ),
+                          headingRowHeight: 60.h,
+                          // horizontalMargin: 100.w,
+                          dataRowHeight: 120.h,
+                          headingRowColor: MaterialStateProperty.resolveWith(
                                   (states) => AppColors.appPrimaryColor),
-                              columns: [
-                                DataColumn(
-                                  label: Text(
-                                    "Category Image",
-                                    style: TextStyle(color: Colors.white),
-                                  ).paddingSymmetric(horizontal: 20.w)),
-                                DataColumn(
-                                  label: Text(
-                                    "Category Name",
-                                    style: TextStyle(color: Colors.white),
-                                  ).paddingSymmetric(horizontal: 40.w)),
-                                DataColumn(
-                                  label: Text(
-                                    "Edit",
-                                    style: TextStyle(color: Colors.white),
-                                  ).paddingSymmetric(horizontal: 20.w)),
-                                DataColumn(
-                                  label: Text(
-                                    "Delete",
-                                    style: TextStyle(color: Colors.white),
-                                  ).paddingSymmetric(horizontal: 20.w)),
-                              ],
-                              rows: List.generate(controller.categories.value.length, (index) {
-                                var category = controller.categories.value[index];
-                                return DataRow(cells: [
-                                  DataCell(
-                                    CircleAvatar(
-                                        radius: 45.r,
-                                        backgroundImage:NetworkImage(category.image),
-                                            // AssetImage("assets/images/car.png")
-                                    ).paddingSymmetric(horizontal: 20.w),
-                                  ),
-                                  DataCell(Text(category.name).paddingSymmetric(horizontal: 40.w)),
-                                  DataCell(
-                                      CustomButton(
+                          columns: [
+                            DataColumn(
+                                label: Text(
+                                  "Category Image",
+                                  style: TextStyle(color: Colors.white),
+                                ).paddingSymmetric(horizontal: 20.w)),
+                            DataColumn(
+                                label: Text(
+                                  "Category Name",
+                                  style: TextStyle(color: Colors.white),
+                                ).paddingSymmetric(horizontal: 40.w)),
+                            DataColumn(
+                                label: Text(
+                                  "Edit",
+                                  style: TextStyle(color: Colors.white),
+                                ).paddingSymmetric(horizontal: 20.w)),
+                            DataColumn(
+                                label: Text(
+                                  "Delete",
+                                  style: TextStyle(color: Colors.white),
+                                ).paddingSymmetric(horizontal: 20.w)),
+                          ],
+                          rows: List.generate(controller.categories.value.length, (index) {
+                            var category = controller.categories.value[index];
+                            return DataRow(cells: [
+                              DataCell(
+                                CircleAvatar(
+                                  radius: 45.r,
+                                  backgroundImage:NetworkImage(category.image),
+                                  // AssetImage("assets/images/car.png")
+                                ).paddingSymmetric(horizontal: 20.w),
+                              ),
+                              DataCell(Text(category.name).paddingSymmetric(horizontal: 40.w)),
+                              DataCell(
+                                  CustomButton(
                                     title: "Edit",
                                     onPressed: () {
                                       Get.to(ScreenAddCategories(status: "Update", category: category,));
@@ -121,29 +122,29 @@ class LayoutCategoriesList extends StatelessWidget {
                                         fontSize: 18.sp,
                                         fontWeight: FontWeight.w500),
                                   ).paddingSymmetric(horizontal: 20.w)),
-                                  DataCell(CustomButton(
-                                    title: "Delete",
-                                    color: Color(0xFFF90C24),
-                                    onPressed: () {
-                                      CustomDialog.showCustomDialog(context,
-                                          SizedBox(
-                                            width: Get.width*.35,
-                                            child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: <Widget>[
-                                                Text("carenoapp.example.com says",style: TextStyle(
-                                                  fontSize: 20.sp,
-                                                  fontFamily: "Nunito",
-                                                  fontWeight: FontWeight.w500
-                                                ),),
-                                                Text("Are you sure you want to delete this category?",style: TextStyle(
-                                                  fontSize: 20.sp,
-                                                  fontFamily: "Nunito",
-                                                  fontWeight: FontWeight.w500
-                                                ),),
-                                                Row(
-                                                  mainAxisAlignment: MainAxisAlignment.end,
+                              DataCell(CustomButton(
+                                title: "Delete",
+                                color: Color(0xFFF90C24),
+                                onPressed: () {
+                                  CustomDialog.showCustomDialog(context,
+                                      SizedBox(
+                                        width: Get.width*.35,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: <Widget>[
+                                            Text("carenoapp.example.com says",style: TextStyle(
+                                                fontSize: 20.sp,
+                                                fontFamily: "Nunito",
+                                                fontWeight: FontWeight.w500
+                                            ),),
+                                            Text("Are you sure you want to delete this category?",style: TextStyle(
+                                                fontSize: 20.sp,
+                                                fontFamily: "Nunito",
+                                                fontWeight: FontWeight.w500
+                                            ),),
+                                            Row(
+                                                mainAxisAlignment: MainAxisAlignment.end,
                                                 children: <Widget>[
                                                   OutlinedButton(
                                                       style: OutlinedButton.styleFrom(
@@ -156,9 +157,9 @@ class LayoutCategoriesList extends StatelessWidget {
                                                           Get.back();
                                                         });
                                                       }, child: Text("Ok",style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 18.sp,
-                                                    fontWeight: FontWeight.w500
+                                                      color: Colors.white,
+                                                      fontSize: 18.sp,
+                                                      fontWeight: FontWeight.w500
                                                   ),)).marginOnly(right: 20.w
                                                   ),
 
@@ -166,32 +167,33 @@ class LayoutCategoriesList extends StatelessWidget {
                                                     Get.back();
                                                   }, child: Text("Cancel")),
                                                 ]
-                                              ),
-                                            ],
                                             ),
-                                          ), 10.0.r);
-                                    },
-                                    height: 38.h,
-                                    width: 90.w,
-                                    textStyle: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 18.sp,
-                                        fontWeight: FontWeight.w500),
-                                  ).paddingSymmetric(horizontal: 20.w)),
+                                          ],
+                                        ),
+                                      ), 10.0.r);
+                                },
+                                height: 38.h,
+                                width: 90.w,
+                                textStyle: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18.sp,
+                                    fontWeight: FontWeight.w500),
+                              ).paddingSymmetric(horizontal: 20.w)),
 
-                                  // DataCell(Text("Test")),
-                                ]);
-                              })),
+                              // DataCell(Text("Test")),
+                            ]);
+                          })),
 
-                      ],
-                    ),
+                    ],
                   ),
                 ),
               ),
             ),
-          ):    Center(
-          child: Text("No Category Found yet",style: TextStyle(fontSize: 20.sp,fontWeight: FontWeight.w600,fontFamily: "Nunito"),)
-      )
+          ),
+        ):    Center(
+            child: Text("No Category Found yet",style: TextStyle(fontSize: 20.sp,fontWeight: FontWeight.w600,fontFamily: "Nunito"),)
+        );
+      })
         ],
       ),
     );

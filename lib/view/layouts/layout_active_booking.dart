@@ -16,10 +16,8 @@ class LayoutActiveBooking extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    activeBooking = activeBooking
-        .where((element) => element.bookingStatus == "Request Pending")
-        .toList();
-    return Container(
+    activeBooking = activeBooking.where((element) => element.bookingStatus == "Request Pending").toList();
+    return activeBooking.isNotEmpty? Container(
       padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 20.w),
       margin: EdgeInsets.symmetric(
         vertical: 15.h,
@@ -182,7 +180,7 @@ class LayoutActiveBooking extends StatelessWidget {
           ),
         ),
       ),
-    );
+    ):Center(child: Text("No active yet",style: TextStyle(color: AppColors.appPrimaryColor,fontFamily: "Nunito",fontSize: 20.sp),),);
   }
 
   LayoutActiveBooking({

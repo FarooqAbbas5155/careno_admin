@@ -17,7 +17,7 @@ Rx<AddHostVehicle?> vehicle = Rx<AddHostVehicle?>(null);
   @override
   Widget build(BuildContext context) {
     completedBooking=completedBooking.where((element) => element.bookingStatus=="Completed").toList();
-    return Container(
+    return completedBooking.isNotEmpty? Container(
       padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 20.w),
       margin: EdgeInsets.symmetric(
         vertical: 15.h,
@@ -145,7 +145,7 @@ Rx<AddHostVehicle?> vehicle = Rx<AddHostVehicle?>(null);
           ),
         ),
       ),
-    );
+    ):Center(child: Text("No Completed Booking yet",style: TextStyle(color: AppColors.appPrimaryColor,fontFamily: "Nunito",fontSize: 20.sp),),);
   }
 
 LayoutCompletedBooking({

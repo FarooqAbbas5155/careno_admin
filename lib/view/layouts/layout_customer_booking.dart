@@ -42,7 +42,7 @@ class LayoutCustomerBooking extends StatelessWidget {
                 stream: bookingsRef.snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState==ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator(),);
+                    return Center(child: CircularProgressIndicator.adaptive(backgroundColor: AppColors.appPrimaryColor,),);
 
                   }
                   var bookings=snapshot.data!.docs.map((e) => Booking.fromMap(e.data() as Map<String,dynamic>)).toList();
