@@ -1,10 +1,16 @@
+import 'dart:typed_data';
+
+import 'package:careno_admin/constant/colors.dart';
 import 'package:careno_admin/constant/helpers.dart';
+import 'package:careno_admin/constant/web_utils.dart';
 import 'package:careno_admin/models/add_host_vehicle.dart';
 import 'package:careno_admin/models/booking.dart';
 import 'package:careno_admin/models/categories.dart';
 import 'package:careno_admin/models/last_message.dart';
+import 'package:careno_admin/models/promotion_banner.dart';
 import 'package:careno_admin/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../constant/fcm.dart';
@@ -14,7 +20,8 @@ class HomeController extends GetxController{
 
   // Get DashBoard data.....
 
-
+RxString bannerModel = "".obs;
+RxString bannerVehicleId = "".obs;
 RxList<User> user = RxList<User>([]);
 RxList<LastMessage> message = RxList<LastMessage>([]);
 RxList<User> Blockuser = RxList<User>([]);
@@ -57,6 +64,33 @@ void onInit(){
   super.onInit();
 
 }
+RxBool BannerLoding = false.obs;
+Future<String> AddPromotionalBanner(String vehicleId,description,List<Uint8List> image,)async {
+  String response = '';
+  BannerLoding.value = true;
+ List<String> imageUrl =  await FileUtilsWeb.uploadMultipleImagesToFirebase(image, "promotionalBanner/${uid}");
+  PromotionBanner promotionBanner = PromotionBanner(
+      vehiceId: vehicleId,
+      description: description,
+      imageList: imageUrl, vehicleModel: bannerModel.value);
+
+  await bannerRef.doc(uid).set(promotionBanner.toMap()).then((value) {
+    response = "success";
+    BannerLoding.value = false;
+    Get.snackbar("Success", "Promotional Banner Upload",backgroundColor: AppColors.appPrimaryColor,colorText: Colors.white);
+    bannerVehicleId.value = "";
+    bannerModel.value = "";
+  }).catchError((error){
+    response = error.toString();
+    BannerLoding.value = false;
+
+    print(response);
+  });
+  return response;
+}
+
+
+
 void updateToken() async {
   var token = (await FCM.generateToken()) ?? "";
   usersRef.doc(uid).update({"notificationToken": token});

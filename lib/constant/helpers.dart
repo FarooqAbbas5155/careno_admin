@@ -17,6 +17,7 @@ CollectionReference addVehicleRef = dbInstance.collection("vehicles");
 CollectionReference bookingsRef = dbInstance.collection("bookings");
 CollectionReference percentageRef = dbInstance.collection("percentage");
 CollectionReference notificationRef = dbInstance.collection("notifications");
+CollectionReference bannerRef = dbInstance.collection("promotionalBanner");
 
 Map<String,User> _allUserMap = {};
 Map<String, Category> _allCategoryMap = {};

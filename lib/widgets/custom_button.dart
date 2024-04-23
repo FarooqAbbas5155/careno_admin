@@ -1,3 +1,4 @@
+import 'package:careno_admin/constant/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../constant/helpers.dart';
@@ -11,6 +12,7 @@ class CustomButton extends StatelessWidget {
   final TextStyle? textStyle;
   final Color? textColor;
   final Border? border;
+  final bool? loading;
 
   CustomButton({
     required this.title,
@@ -20,7 +22,8 @@ class CustomButton extends StatelessWidget {
     this.height,
     this.textStyle,
     this.textColor,
-    this.border
+    this.border,
+    this.loading=false
   });
 
   @override
@@ -38,10 +41,10 @@ class CustomButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(8.r),
             )
         ),
-        child: Text(
+        child:loading == false? Text(
           title ?? 'Button',
           style: textStyle ?? TextStyle(fontSize: 22.sp,fontFamily: "Nunito", fontWeight: FontWeight.w800,color: textColor??Colors.white),
-        ),
+        ):CircularProgressIndicator.adaptive(backgroundColor: Colors.white,),
       ),
     );
   }

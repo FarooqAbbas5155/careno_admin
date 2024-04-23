@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:careno_admin/controllers/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,17 +10,19 @@ import '../../widgets/custom_button.dart';
 import '../screens/screen_vehicle_details.dart';
 
 class LayoutActiveVehicles extends StatelessWidget {
- String? userType;
- HomeController controller = Get.put(HomeController());
+  String? userType;
+  String? bannerModel;
+  HomeController controller = Get.put(HomeController());
+
   @override
   Widget build(BuildContext context) {
-         return Scaffold(
-           body:controller.vehiclesRequest.value.isNotEmpty? Container(
-                 padding: EdgeInsets.symmetric(horizontal: 30.w),
-                 color: AppColors.backGroundColor,
-                 child: Column(
-                   crossAxisAlignment: CrossAxisAlignment.start,
-                   children: [
+    return Scaffold(
+      body: controller.vehiclesRequest.value.isNotEmpty ? Container(
+        padding: EdgeInsets.symmetric(horizontal: 30.w),
+        color: AppColors.backGroundColor,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
             Text(
               "Active Vehicle",
               style: AppColors.headingStyle,
@@ -50,7 +54,8 @@ class LayoutActiveVehicles extends StatelessWidget {
                               headingRowHeight: 60.h,
                               // horizontalMargin: 100.w,
                               dataRowHeight: 120.h,
-                              headingRowColor: MaterialStateProperty.resolveWith(
+                              headingRowColor: MaterialStateProperty
+                                  .resolveWith(
                                       (states) => AppColors.appPrimaryColor),
                               columns: [
                                 DataColumn(
@@ -78,15 +83,18 @@ class LayoutActiveVehicles extends StatelessWidget {
                                       "Rate Per Hour",
                                       style: TextStyle(color: Colors.white),
                                     ).paddingSymmetric(horizontal: 20.w)),
-           
+
                                 DataColumn(
                                     label: Text(
                                       "Action",
                                       style: TextStyle(color: Colors.white),
                                     ).paddingSymmetric(horizontal: 20.w)),
                               ],
-                              rows: List.generate(controller.vehiclesRequest.value.length, (index) {
-                                var vehicle = controller.vehiclesRequest.value[index];
+                              rows: List.generate(
+                                  controller.vehiclesRequest.value.length, (
+                                  index) {
+                                var vehicle = controller.vehiclesRequest
+                                    .value[index];
                                 return DataRow(cells: [
                                   DataCell(
                                     CircleAvatar(
@@ -99,23 +107,43 @@ class LayoutActiveVehicles extends StatelessWidget {
                                       .paddingSymmetric(horizontal: 20.w)),
                                   DataCell(Text(vehicle.address)
                                       .paddingSymmetric(horizontal: 20.w)),
-                                  DataCell(Text("\$ ${vehicle.vehiclePerDayRent}")
-                                      .paddingSymmetric(horizontal: 20.w)),
-                                  DataCell(Text("\$ ${vehicle.vehiclePerHourRent}")
-                                      .paddingSymmetric(horizontal: 20.w)),
                                   DataCell(
-                                    CustomButton(
-                                      title: "View",
-                                      onPressed: () {
-                                        Get.to(ScreenVehicleDetails(status: 'Active',userType:userType,vehicle: vehicle,));
-                                      },
-                                      height: 41.h,
-                                      width: 100.w,
-                                      textStyle: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18.sp,
-                                          fontWeight: FontWeight.w500),
-                                    ),
+                                      Text("\$ ${vehicle.vehiclePerDayRent}")
+                                          .paddingSymmetric(horizontal: 20.w)),
+                                  DataCell(
+                                      Text("\$ ${vehicle.vehiclePerHourRent}")
+                                          .paddingSymmetric(horizontal: 20.w)),
+                                  DataCell(
+                                      bannerModel == null ? CustomButton(
+                                        title: "View",
+                                        onPressed: () {
+                                          Get.to(ScreenVehicleDetails(
+                                            status: 'Active',
+                                            userType: userType,
+                                            vehicle: vehicle,));
+                                        },
+                                        height: 41.h,
+                                        width: 100.w,
+                                        textStyle: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 18.sp,
+                                            fontWeight: FontWeight.w500),
+                                      ) : CustomButton(
+                                        title: "Select",
+                                        onPressed: () {
+                                          controller.bannerModel.value = vehicle.vehicleModel;
+                                          controller.bannerVehicleId.value = vehicle.vehicleId;
+
+                                          HomeController homeController = Get.find<HomeController>();
+                                          Get.back(result:controller.bannerModel.value);
+                                        },
+                                        height: 41.h,
+                                        width: 100.w,
+                                        textStyle: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 18.sp,
+                                            fontWeight: FontWeight.w500),
+                                      ),
                                   )
 
                                   // DataCell(Text("Test")),
@@ -128,15 +156,17 @@ class LayoutActiveVehicles extends StatelessWidget {
                 ),
               ),
             ),
-                   ],
-                 ),
-               ):    Center(
-               child: Text("No User Found yet",style: TextStyle(fontSize: 20.sp,fontWeight: FontWeight.w600,fontFamily: "Nunito"),)),
-         );
-
+          ],
+        ),
+      ) : Center(
+          child: Text("No User Found yet", style: TextStyle(fontSize: 20.sp,
+              fontWeight: FontWeight.w600,
+              fontFamily: "Nunito"),)),
+    );
   }
 
- LayoutActiveVehicles({
+  LayoutActiveVehicles({
     this.userType,
+    this.bannerModel,
   });
 }
