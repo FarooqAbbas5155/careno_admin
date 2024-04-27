@@ -8,6 +8,7 @@ import 'package:careno_admin/view/layouts/layout_providers_list.dart';
 import 'package:careno_admin/view/layouts/layout_providers_requests.dart';
 import 'package:careno_admin/view/layouts/layout_settings.dart';
 import 'package:careno_admin/view/layouts/layout_vehicles_requests.dart';
+import 'package:careno_admin/view/layouts/layout_payout.dart';
 import 'package:careno_admin/widgets/sidebar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +44,7 @@ class SidebarController extends GetxController{
     Sidebar(icon: "assets/icons/banner.svg", title: "Promotional Banner",fontSize: 14),
     Sidebar(icon: "assets/icons/setting.svg", title: "Settings",fontSize: 14),
     Sidebar(icon: "assets/icons/message.svg", title: "Message",fontSize: 14,),
+    Sidebar(icon: "assets/icons/payout.svg", title: "Payout",fontSize: 14,),
     Sidebar(icon: "assets/icons/logout.svg", title: "Logout",fontSize: 16),
   ];
 
@@ -59,6 +61,7 @@ class SidebarController extends GetxController{
     LayoutPromotionalBanner(),
     LayoutSettings(),
     LayoutMessages(),
+    LayoutPayout(),
     LayoutLogout(),
 
   ];

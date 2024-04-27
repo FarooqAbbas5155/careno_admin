@@ -26,6 +26,7 @@ class Assets {
   static const String iconsLogout = 'assets/icons/logout.svg';
   static const String iconsLogout2 = 'assets/icons/logout2.svg';
   static const String iconsMessage = 'assets/icons/message.svg';
+  static const String iconsPayout = 'assets/icons/payout.svg';
   static const String iconsProvider = 'assets/icons/provider.svg';
   static const String iconsProviderRequest = 'assets/icons/providerRequest.svg';
   static const String iconsRectangle = 'assets/icons/Rectangle.png';

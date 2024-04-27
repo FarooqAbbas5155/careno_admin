@@ -6,13 +6,16 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
 
 import 'constant/colors.dart';
+import 'controllers/payment_controller.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
+  // Stripe.publishableKey = PaymentController.stripePublishableKey;
 
   // Keep only one Firebase.initializeApp() call for all platforms
   await Firebase.initializeApp(
