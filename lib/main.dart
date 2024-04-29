@@ -12,7 +12,7 @@ import 'package:get/get_navigation/src/routes/transitions_type.dart';
 
 import 'constant/colors.dart';
 import 'controllers/payment_controller.dart';
-
+//hjghhghgh
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   // Stripe.publishableKey = PaymentController.stripePublishableKey;
