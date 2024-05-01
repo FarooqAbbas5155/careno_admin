@@ -27,10 +27,12 @@ class Assets {
   static const String iconsLogout2 = 'assets/icons/logout2.svg';
   static const String iconsMessage = 'assets/icons/message.svg';
   static const String iconsPayout = 'assets/icons/payout.svg';
+  static const String iconsPolicy = 'assets/icons/policy.svg';
   static const String iconsProvider = 'assets/icons/provider.svg';
   static const String iconsProviderRequest = 'assets/icons/providerRequest.svg';
   static const String iconsRectangle = 'assets/icons/Rectangle.png';
   static const String iconsSetting = 'assets/icons/setting.svg';
+  static const String iconsTerms = 'assets/icons/terms.svg';
   static const String iconsVehicleRequest = 'assets/icons/vehicleRequest.svg';
   static const String imagesBlockProvider = 'assets/images/block_provider.png';
   static const String imagesBlockUser = 'assets/images/block_user.png';

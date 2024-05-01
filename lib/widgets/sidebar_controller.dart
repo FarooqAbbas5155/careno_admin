@@ -3,10 +3,12 @@ import 'package:careno_admin/view/layouts/layout_categories_list.dart';
 import 'package:careno_admin/view/layouts/layout_customers_list.dart';
 import 'package:careno_admin/view/layouts/layout_dashboard.dart';
 import 'package:careno_admin/view/layouts/layout_logout.dart';
+import 'package:careno_admin/view/layouts/layout_privacy_policy.dart';
 import 'package:careno_admin/view/layouts/layout_promotional_banner.dart';
 import 'package:careno_admin/view/layouts/layout_providers_list.dart';
 import 'package:careno_admin/view/layouts/layout_providers_requests.dart';
 import 'package:careno_admin/view/layouts/layout_settings.dart';
+import 'package:careno_admin/view/layouts/layout_terms_and_conditions.dart';
 import 'package:careno_admin/view/layouts/layout_vehicles_requests.dart';
 import 'package:careno_admin/view/layouts/layout_payout.dart';
 import 'package:careno_admin/widgets/sidebar.dart';
@@ -45,6 +47,8 @@ class SidebarController extends GetxController{
     Sidebar(icon: "assets/icons/setting.svg", title: "Settings",fontSize: 14),
     Sidebar(icon: "assets/icons/message.svg", title: "Message",fontSize: 14,),
     Sidebar(icon: "assets/icons/payout.svg", title: "Payout",fontSize: 14,),
+    Sidebar(icon: "assets/icons/policy.svg", title: "Privacy Policy",fontSize: 14,),
+    Sidebar(icon: "assets/icons/terms.svg", title: "Terms And Conditions",fontSize: 14,),
     Sidebar(icon: "assets/icons/logout.svg", title: "Logout",fontSize: 16),
   ];
 
@@ -62,6 +66,8 @@ class SidebarController extends GetxController{
     LayoutSettings(),
     LayoutMessages(),
     LayoutPayout(),
+    LayoutPrivacyPolicy(),
+    LayoutTermsAndConditions(),
     LayoutLogout(),
 
   ];
