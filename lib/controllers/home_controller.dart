@@ -19,7 +19,7 @@ class HomeController extends GetxController{
 
 
   // Get DashBoard data.....
-
+RxBool loading = false.obs;
 RxString bannerModel = "".obs;
 RxString bannerVehicleId = "".obs;
 RxList<User> user = RxList<User>([]);
@@ -29,7 +29,7 @@ RxList<User> host = RxList<User>([]);
 RxList<User> Blockhost = RxList<User>([]);
 RxList<User> hostRequest = RxList<User>([]);
 RxList<Category> categories = RxList<Category>([]);
-RxList<Booking> activeVehicle = RxList<Booking>([]);
+RxList<AddHostVehicle> activeVehicle = RxList<AddHostVehicle>([]);
 RxList<AddHostVehicle> vehiclesRequest = RxList<AddHostVehicle>([]);
 Stream<QuerySnapshot>? userSnapshot;
 Stream<QuerySnapshot>? messageSnapshot;
@@ -53,14 +53,14 @@ void onInit(){
   Blockhost.bindStream(BlockhostSnapshot!.map((event) => event.docs.map((e) => User.fromMap(e.data() as Map<String,dynamic>)).toList()));
   HostRequestSnapshot = usersRef.where("userType", isEqualTo: "host").where("isVerified",isEqualTo: false).snapshots();
   hostRequest.bindStream(HostRequestSnapshot!.map((event) => event.docs.map((e) => User.fromMap(e.data() as Map<String,dynamic>)).toList()));
-  VehicelRequestSnapshot = addVehicleRef.where("isVerified",isEqualTo: false).snapshots();
+  VehicelRequestSnapshot = addVehicleRef.where("isVerified",isEqualTo: false).where("status",isEqualTo: "Pending").snapshots();
   vehiclesRequest.bindStream(VehicelRequestSnapshot!.map((event) => event.docs.map((e) => AddHostVehicle.fromMap(e.data() as Map<String,dynamic>)).toList() ));
   categorySnapshot = categoryRef.snapshots();
   categories.bindStream(categorySnapshot!.map((event) => event.docs.map((e) => Category.fromMap(e.data() as Map<String,dynamic>)).toList()));
   messageSnapshot =  usersRef.doc(uid).collection("chats").snapshots();
   message.bindStream(messageSnapshot!.map((event) => event.docs.map((e) => LastMessage.fromMap(e.data() as Map<String,dynamic>)).toList()));
-  ActiveVehicleSnapshot = bookingsRef.where("bookingStatus", whereIn: ["In progress", "Pending Approval"]).snapshots();
-  activeVehicle.bindStream(ActiveVehicleSnapshot!.map((event) => event.docs.map((e) => Booking.fromMap(e.data() as Map<String,dynamic>)).toList()));
+  ActiveVehicleSnapshot = addVehicleRef.where("isVerified",isEqualTo:true).where("status",isEqualTo: "Active").snapshots();
+  activeVehicle.bindStream(ActiveVehicleSnapshot!.map((event) => event.docs.map((e) => AddHostVehicle.fromMap(e.data() as Map<String,dynamic>)).toList() ));
   super.onInit();
 
 }

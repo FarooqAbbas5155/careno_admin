@@ -17,7 +17,7 @@ class LayoutActiveVehicles extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: controller.vehiclesRequest.value.isNotEmpty ? Container(
+      body: controller.activeVehicle.value.isNotEmpty ? Container(
         padding: EdgeInsets.symmetric(horizontal: 30.w),
         color: AppColors.backGroundColor,
         child: Column(
@@ -91,9 +91,9 @@ class LayoutActiveVehicles extends StatelessWidget {
                                     ).paddingSymmetric(horizontal: 20.w)),
                               ],
                               rows: List.generate(
-                                  controller.vehiclesRequest.value.length, (
+                                  controller.activeVehicle.value.length, (
                                   index) {
-                                var vehicle = controller.vehiclesRequest
+                                var vehicle = controller.activeVehicle
                                     .value[index];
                                 return DataRow(cells: [
                                   DataCell(

@@ -3,6 +3,7 @@ import 'package:careno_admin/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:intl/intl.dart';
 
 import '../models/categories.dart';
@@ -86,4 +87,31 @@ String formatTime(int hour24) {
   String formattedTime = dateFormat.format(dateTime);
 
   return formattedTime;
+}
+Future<void> deleteDirectory(String path) async {
+  try {
+    // Get reference to the directory
+    Reference directoryRef = FirebaseStorage.instance.ref().child(path);
+
+    // List all items (files and subdirectories) in the directory
+    ListResult result = await directoryRef.listAll();
+
+    // Delete each item (file or subdirectory) recursively
+    for (Reference ref in result.items) {
+      if (ref.fullPath.endsWith('/')) {
+        // If the item is a subdirectory (ends with '/'), delete it recursively
+        await deleteDirectory(ref.fullPath);
+      } else {
+        // If the item is a file, delete it
+        await ref.delete();
+      }
+    }
+
+    // After deleting all items, delete the directory itself
+    await directoryRef.delete();
+
+    print('Directory $path and its contents deleted successfully.');
+  } catch (e) {
+    print('Error deleting directory $path: $e');
+  }
 }
