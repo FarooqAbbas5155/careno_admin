@@ -7,7 +7,7 @@ import '../models/percentage.dart';
 
 class PercentageController extends GetxController {
   Rx<TextEditingController> percentageController = TextEditingController().obs;
-
+  RxBool loading = false.obs;
   @override
   void onInit(){
     fetchExistingPercentage();
@@ -50,25 +50,34 @@ class PercentageController extends GetxController {
     }
   }
   Future<void> SetPercentage() async {
+    loading.value = true;
     String value = percentageController.value.text.trim();
     print(categoryId);
     if (categoryId !=null) {
-      await percentageRef.doc(categoryId).update({"percentage": value}).then((value){
+      await percentageRef.doc(uid).update({"percentage": value}).then((value){
         Get.snackbar("Congratulations", "Successfully updated Service Percentage value",
             backgroundColor: AppColors.appPrimaryColor, colorText: Colors.white);
+        loading.value = false;
+
       }).catchError((error) {
         Get.snackbar("Error", "Failed to update percentage value: $error",
             backgroundColor: Colors.red, colorText: Colors.white);
+        loading.value = false;
+
       });
     } else {
-      int id = DateTime.now().millisecondsSinceEpoch;
-      Percentage percentage = Percentage(id: id.toString(), percentage: value);
-      await percentageRef.doc(id.toString()).set(percentage.toMap()).then((_) {
+      Percentage percentage = Percentage(id: uid, percentage: value);
+      await percentageRef.doc(uid).set(percentage.toMap()).then((_) {
         Get.snackbar("Congratulations", "Successfully set Service Percentage value",
             backgroundColor: AppColors.appPrimaryColor, colorText: Colors.white);
+        loading.value = false;
+        Get.back();
+
       }).catchError((error) {
         Get.snackbar("Error", "Failed to set percentage value: $error",
             backgroundColor: Colors.red, colorText: Colors.white);
+        loading.value = false;
+
       });
     }
   }
