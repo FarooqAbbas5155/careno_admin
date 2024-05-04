@@ -379,12 +379,13 @@ class _ScreenChatState extends State<ScreenChat> {
                         print(error.toString());
                       }).then((value) {
                         animateToLastMessage(300);
-
-                        FCM.sendMessageSingle(
-                            "New Message",
-                            message.text,
-                            widget.user!.notificationToken.toString(),
-                            {});
+                        if(widget.user!.notification == true){
+                          FCM.sendMessageSingle(
+                              "New Message",
+                              message.text,
+                              widget.user!.notificationToken.toString(),
+                              {});
+                        }
                       }).then((value) {
                         print(value);
                       });

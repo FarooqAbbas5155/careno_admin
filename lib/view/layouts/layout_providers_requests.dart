@@ -157,13 +157,15 @@ class LayoutProvidersRequests extends StatelessWidget {
                                                   await usersRef.doc(host.uid)
                                                       .update(
                                                       {"isVerified": true})
-                                                      .then((value) {
-                                                    FCM.sendMessageSingle(
-                                                        "Congrutulation",
-                                                        "Your host Account Approve!",
-                                                        host!.notificationToken
-                                                            .toString(),
-                                                        {});
+                                                      .then((value) async{
+                                                        if (host.notification == true) {
+                                                        await  FCM.sendMessageSingle(
+                                                              "Congrutulation",
+                                                              "Your host Account Approve!",
+                                                              host!.notificationToken
+                                                                  .toString(),
+                                                              {});
+                                                        }
 
                                                     Get.snackbar("Alert",
                                                         "Successfully Account Approved",

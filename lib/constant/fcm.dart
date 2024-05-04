@@ -6,7 +6,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
-class FCM {
+class FCM{
   static int _messageCount = 0;
   static final _firebaseMessaging = FirebaseMessaging.instance;
   static var _serverKey = 'AAAAOU5r1qc:APA91bFiGUf1Lxyo9hxwHc_uZ1ACRFG-YVwsFx1DeAKfoW5XCH02r1fbnJ5MHhINLMhbnQL3Hw5YeZMIusnyHaZS1jYOyyiQtxgvNl_MlzrszOAny-h827uN40LJlO--gpN3RXbt6LL0';

@@ -184,15 +184,19 @@ class LayoutVehiclesRequests extends StatelessWidget {
                                                           "isVerified": true,
                                                           "status": "Active"
                                                         })
-                                                            .then((value) {
-                                                          FCM.sendMessageSingle(
-                                                              "Congrutulation",
-                                                              "${vehicle!
-                                                                  .vehicleModel} is Approved",
-                                                              host!
-                                                                  .notificationToken
-                                                                  .toString(),
-                                                              {});
+                                                            .then((value) async{
+                                                              if (host!.notification == true) {
+                                                                await FCM.sendMessageSingle(
+                                                                    "Congrutulation",
+                                                                    "${vehicle!
+                                                                        .vehicleModel} is Approved",
+                                                                    host!
+                                                                        .notificationToken
+                                                                        .toString(),
+                                                                    {});
+
+
+                                                              }
                                                           Get.snackbar("Alert",
                                                               "Successfully Aproved vehicel",
                                                               backgroundColor: Colors
