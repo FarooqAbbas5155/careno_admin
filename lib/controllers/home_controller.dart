@@ -68,7 +68,7 @@ RxBool BannerLoding = false.obs;
 Future<String> AddPromotionalBanner(String vehicleId,description,List<Uint8List> image,)async {
   String response = '';
   BannerLoding.value = true;
- List<String> imageUrl =  await FileUtilsWeb.uploadMultipleImagesToFirebase(image, "promotionalBanner/${uid}");
+ List<String> imageUrl =  await FileUtilsWeb.uploadMultipleImagesToFirebase(image, "promotionalBanner/${uid}/");
   PromotionBanner promotionBanner = PromotionBanner(
       vehiceId: vehicleId,
       description: description,
